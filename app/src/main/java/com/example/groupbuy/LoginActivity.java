@@ -1,0 +1,39 @@
+package com.example.groupbuy;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.groupbuy.connection.HttpRequestDebug;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginActivity extends AppCompatActivity {
+    HttpRequestDebug httpRequest = new HttpRequestDebug(this);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        Button btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Map body = getData();
+                httpRequest.login(body);
+            }
+        });
+    }
+
+    private Map getData() {
+        EditText etLogin = (EditText) findViewById(R.id.etLogin);
+        EditText etPassword = (EditText) findViewById(R.id.etPassword);
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put( "username", etLogin.getText().toString());
+        data.put( "password", etPassword.getText().toString());
+        return data;
+    }
+}

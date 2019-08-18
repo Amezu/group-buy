@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">GroupBuy</string>
+
+    <string name="group_list_new">New group</string>
+
+    <string name="add_group_group_name">Group name</string>
+    <string name="add_group_create">Create</string>
+
+    <string name="add_product_name">Product name</string>
+    <string name="add_product_add">Add</string>
+
+    <string name="title_groups">Groups</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_logout">Logout</string>
+
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="action_settings">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="friends">Friends</string>
+</resources>
