@@ -1,24 +1,21 @@
 package com.example.groupbuy;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.groupbuy.connection.HttpRequestDebug;
-import com.example.groupbuy.party.PartyListFragment;
 import com.example.groupbuy.party.PartyFragment;
+import com.example.groupbuy.party.PartyListFragment;
 import com.example.groupbuy.party.PeopleFragment;
-import com.example.groupbuy.profile.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-    long time = 0;
 
     private static final SparseArray<Fragment> FRAGMENT_BY_ID = new SparseArray<>();
 
@@ -26,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         FRAGMENT_BY_ID.put(R.id.navigation_parties, new PartyListFragment());
 //        FRAGMENT_BY_ID.put(R.id.navigation_profile, new ProfileFragment());
     }
+
+    long time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +54,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        if(menuItem.getItemId() == R.id.navigation_logout)
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.navigation_logout)
             return logout();
         else
             return loadFragment(FRAGMENT_BY_ID.get(menuItem.getItemId()));
@@ -75,12 +74,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         long now = System.currentTimeMillis();
 
-        if(now - time < 1000) {
+        if (now - time < 1000) {
             moveTaskToBack(true);
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
-        }
-        else {
+        } else {
             loadFragment(new PartyListFragment());
 
             Toast.makeText(this, "Press once again to exit!", Toast.LENGTH_SHORT).show();

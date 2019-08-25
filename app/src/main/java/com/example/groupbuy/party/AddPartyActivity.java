@@ -1,9 +1,11 @@
 package com.example.groupbuy.party;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.HttpRequestDebug;

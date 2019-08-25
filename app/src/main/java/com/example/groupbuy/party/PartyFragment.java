@@ -3,9 +3,6 @@ package com.example.groupbuy.party;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
-
-import java.util.Locale;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class PartyFragment extends Fragment {
 
@@ -61,7 +59,7 @@ public class PartyFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         loadPeoplePart();
@@ -75,13 +73,6 @@ public class PartyFragment extends Fragment {
         Boolean[] clickable = {true, true, false};
 
         ListAdapter productListAdapter = new ProductListAdapter(getActivity(), title, subtitle, bought, clickable);
-//                new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_multiple_choice, products);
-//        TODO: Lista customizowana, checkbox z 3 stanami
-//        https://stackoverflow.com/questions/3965484/custom-checkbox-image-android
-//        https://developer.android.com/guide/topics/resources/drawable resource.html#StateList
-//        https://www.codeproject.com/Articles/1006843/An-Efficient-Way-to-Make-Button-Color-Change-on-An
-//        https://stackoverflow.com/questions/18395075/change-the-state-of-button-to-pressed
-//        https://stackoverflow.com/questions/12702045/disable-checkbox-after-checked-android
 
         ListView productListView = getView().findViewById(R.id.list);
         productListView.setAdapter(productListAdapter);
@@ -92,7 +83,7 @@ public class PartyFragment extends Fragment {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Product product = (Product) parent.getItemAtPosition(position);
                         product.changeStatus();
-                        if(product.bought)
+                        if (product.bought)
                             Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -124,7 +115,7 @@ public class PartyFragment extends Fragment {
                 peopleShort = people[0] + ", " + people[1] + ", " + people[2];
                 break;
             default:
-                peopleShort = String.format(Locale.US, "%s, %s, %s and %d more people", people[0], people[1], people[2], people.length - 3);
+                peopleShort = String.format("%s, %s, %s and %d more people", people[0], people[1], people[2], people.length - 3);
                 break;
         }
 

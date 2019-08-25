@@ -3,9 +3,6 @@ package com.example.groupbuy.party;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,15 +15,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.Callback;
+import com.example.groupbuy.connection.HttpRequestDebug;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.example.groupbuy.connection.HttpRequestDebug;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,7 @@ public class PartyListFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         httpRequest = new HttpRequestDebug(getActivity());

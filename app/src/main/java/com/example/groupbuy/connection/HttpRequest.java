@@ -1,10 +1,7 @@
 package com.example.groupbuy.connection;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,7 +13,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.groupbuy.LoginActivity;
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.StartActivity;
 
@@ -79,7 +75,6 @@ public class HttpRequest {
 
     public void register(final Map body) {
         sendRequest(body, "", "public/users/register", Request.Method.POST, new Callback() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void success(JSONObject response) throws JSONException {
                 response.toString();
@@ -96,7 +91,6 @@ public class HttpRequest {
 
     public void login(final Map body) {
         sendRequest(body, "", "public/users/login", Request.Method.POST, new Callback() {
-            @SuppressLint("NewApi")
             @Override
             public void success(JSONObject response) throws JSONException {
                 if (response.get("status").equals(true)) {

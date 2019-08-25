@@ -1,13 +1,13 @@
 package com.example.groupbuy.profile;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.Callback;
@@ -38,7 +38,7 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         new HttpRequestDebug(getActivity()).loadFriendsList(new Callback() {

@@ -2,8 +2,6 @@ package com.example.groupbuy.connection;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +48,6 @@ public class Session {
         return pref.getString("ID","");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void saveSession(Map data, String ID) {
         this.setUsername(Objects.requireNonNull(data.get("username")).toString());
         this.setID(ID);

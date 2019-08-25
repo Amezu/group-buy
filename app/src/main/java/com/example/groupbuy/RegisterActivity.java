@@ -1,14 +1,14 @@
 package com.example.groupbuy;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.groupbuy.connection.HttpRequestDebug;
 
@@ -29,7 +29,6 @@ public class RegisterActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, MainActivity.class);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 final Map data = getData();
@@ -54,7 +53,6 @@ public class RegisterActivity extends AppCompatActivity {
         return data;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean validate(Map data) {
         final String email = Objects.requireNonNull(data.get("email")).toString();
         final String username = Objects.requireNonNull(data.get("username")).toString();

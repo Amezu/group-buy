@@ -1,9 +1,6 @@
 package com.example.groupbuy.party;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.groupbuy.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class PeopleFragment extends Fragment {
 
@@ -25,7 +25,7 @@ public class PeopleFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         loadPeopleList();
@@ -33,7 +33,7 @@ public class PeopleFragment extends Fragment {
 
     public void loadPeopleList() {
         String[] people = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
-        ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, people);
+        ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, people);
         ListView view = getView().findViewById(R.id.list);
         view.setAdapter(adapter);
 
