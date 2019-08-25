@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final SparseArray<Fragment> FRAGMENT_BY_ID = new SparseArray<>();
 
     static {
-        FRAGMENT_BY_ID.put(R.id.navigation_groups, new PartyListFragment());
-        FRAGMENT_BY_ID.put(R.id.navigation_profile, new ProfileFragment());
+        FRAGMENT_BY_ID.put(R.id.navigation_parties, new PartyListFragment());
+//        FRAGMENT_BY_ID.put(R.id.navigation_profile, new ProfileFragment());
     }
 
     @Override
