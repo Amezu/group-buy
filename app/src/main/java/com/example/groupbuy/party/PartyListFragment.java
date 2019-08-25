@@ -1,4 +1,4 @@
-package com.example.groupbuy.group;
+package com.example.groupbuy.party;
 
 
 import android.content.Intent;
@@ -31,7 +31,7 @@ import com.example.groupbuy.connection.HttpRequestDebug;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupsFragment extends Fragment {
+public class PartyListFragment extends Fragment {
     HttpRequestDebug httpRequest;
 
     @Override
@@ -120,7 +120,7 @@ public class GroupsFragment extends Fragment {
     }
 
     public void openAddGroupActivity() {
-        Intent intent = new Intent(getActivity(), AddGroupActivity.class);
+        Intent intent = new Intent(getActivity(), AddPartyActivity.class);
         startActivity(intent);
     }
 

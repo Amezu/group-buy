@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.groupbuy.connection.HttpRequestDebug;
-import com.example.groupbuy.group.GroupsFragment;
-import com.example.groupbuy.group.ProductsFragment;
+import com.example.groupbuy.party.PartyListFragment;
+import com.example.groupbuy.party.PartyFragment;
 import com.example.groupbuy.profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private static final SparseArray<Fragment> FRAGMENT_BY_ID = new SparseArray<>();
 
     static {
-        FRAGMENT_BY_ID.put(R.id.navigation_groups, new GroupsFragment());
+        FRAGMENT_BY_ID.put(R.id.navigation_groups, new PartyListFragment());
         FRAGMENT_BY_ID.put(R.id.navigation_profile, new ProfileFragment());
     }
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        loadFragment(new GroupsFragment());
+        loadFragment(new PartyListFragment());
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             System.exit(1);
         }
         else {
-            loadFragment(new GroupsFragment());
+            loadFragment(new PartyListFragment());
 
             Toast.makeText(this, "Press once again to exit!", Toast.LENGTH_SHORT).show();
             time = now;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void openProductsFragment(String groupName) {
-        loadFragment(ProductsFragment.newInstance(groupName));
+        loadFragment(PartyFragment.newInstance(groupName));
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(groupName);

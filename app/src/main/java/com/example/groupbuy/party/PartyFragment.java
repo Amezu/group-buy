@@ -1,4 +1,4 @@
-package com.example.groupbuy.group;
+package com.example.groupbuy.party;
 
 
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.groupbuy.R;
 
-public class ProductsFragment extends Fragment {
+public class PartyFragment extends Fragment {
 
     class Product {
         String name;
@@ -36,17 +36,17 @@ public class ProductsFragment extends Fragment {
         }
     }
 
-    public ProductsFragment() {
+    public PartyFragment() {
     }
 
-    public static ProductsFragment newInstance(String groupName) {
-        ProductsFragment productsFragment = new ProductsFragment();
+    public static PartyFragment newInstance(String groupName) {
+        PartyFragment partyFragment = new PartyFragment();
 
         Bundle args = new Bundle();
         args.putString("groupName", groupName);
-        productsFragment.setArguments(args);
+        partyFragment.setArguments(args);
 
-        return productsFragment;
+        return partyFragment;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.groupbuy.group;
+package com.example.groupbuy.party;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

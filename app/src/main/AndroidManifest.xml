@@ -17,8 +17,8 @@
             <activity
                 android:name=".MainActivity"
                 android:label="@string/title_activity_main"/>
-            <activity android:name=".group.AddProductActivity" />
-            <activity android:name=".group.AddGroupActivity" />
+            <activity android:name=".party.AddProductActivity" />
+            <activity android:name=".party.AddPartyActivity" />
             <activity android:name=".RegisterActivity" />
             <activity android:name=".LoginActivity" />
             <activity android:name=".StartActivity">

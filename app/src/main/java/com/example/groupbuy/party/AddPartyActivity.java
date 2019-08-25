@@ -1,4 +1,4 @@
-package com.example.groupbuy.group;
+package com.example.groupbuy.party;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,12 +12,12 @@ import com.example.groupbuy.connection.Session;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddGroupActivity extends AppCompatActivity {
+public class AddPartyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_group);
+        setContentView(R.layout.activity_add_party);
     }
 
     public void addGroup(android.view.View view) {
