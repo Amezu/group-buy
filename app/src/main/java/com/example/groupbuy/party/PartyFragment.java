@@ -10,11 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.groupbuy.R;
+
+import java.util.Locale;
 
 public class PartyFragment extends Fragment {
 
@@ -59,6 +63,27 @@ public class PartyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        loadPeople();
+        loadProducts();
+        
+        ImageView invitePerson = getView().findViewById(R.id.addPeopleButton);
+        invitePerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddProductActivity();
+            }
+        });
+    }
+
+    private void loadProducts() {
         String[] title = {"soki - 2l", "wódka - 3l", "chipsy - 2 paczki"};
         String[] subtitle = {"(0 propozycji)", "(1 propozycja)", "Ola, cheetosy"};
         Boolean[] bought = {false, false, true};
@@ -87,19 +112,42 @@ public class PartyFragment extends Fragment {
                     }
                 }
         );
+    }
 
-        FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddProductActivity();
-            }
-        });
+    private void loadPeople() {
+        String[] people = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
+        String peopleShort;
+        switch (people.length) {
+            case 0:
+                peopleShort = "No people invited to party";
+                break;
+            case 1:
+                peopleShort = people[0];
+                break;
+            case 2:
+                peopleShort = people[0] + ", " + people[1];
+                break;
+            case 3:
+                peopleShort = people[0] + ", " + people[1] + ", " + people[2];
+                break;
+            default:
+                peopleShort = String.format(Locale.US, "%s, %s, %s and %d more people", people[0], people[1], people[2], people.length - 3);
+                break;
+        }
+
+        TextView peopleShortView = getView().findViewById(R.id.peopleShortText);
+        peopleShortView.setText(peopleShort);
     }
 
     public void openAddProductActivity() {
         Intent intent = new Intent(getActivity(), AddProductActivity.class);
         intent.putExtra("partyName", getArguments().getString("partyName", ""));
         startActivity(intent);
+    }
+
+    public void openInvitePersonActivity() {
+//        Intent intent = new Intent(getActivity(), AddProductActivity.class);
+//        intent.putExtra("partyName", getArguments().getString("partyName", ""));
+//        startActivity(intent);
     }
 }
