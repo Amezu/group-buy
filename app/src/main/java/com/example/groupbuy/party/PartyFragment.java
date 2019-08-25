@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
 
 import java.util.Locale;
@@ -134,7 +135,15 @@ public class PartyFragment extends Fragment {
         invitePerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                openInvitePersonActivity();
+            }
+        });
 
+        View peopleFrame = getView().findViewById(R.id.peopleFrame);
+        peopleFrame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openInvitedPeopleFragment();
             }
         });
     }
@@ -149,5 +158,10 @@ public class PartyFragment extends Fragment {
 //        Intent intent = new Intent(getActivity(), AddProductActivity.class);
 //        intent.putExtra("partyName", getArguments().getString("partyName", ""));
 //        startActivity(intent);
+    }
+
+    public void openInvitedPeopleFragment() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.openPeopleFragment();
     }
 }

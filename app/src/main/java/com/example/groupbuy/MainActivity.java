@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.party.PartyListFragment;
 import com.example.groupbuy.party.PartyFragment;
+import com.example.groupbuy.party.PeopleFragment;
 import com.example.groupbuy.profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -93,5 +94,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(groupName);
         actionBar.show();
+    }
+
+    public void openPeopleFragment() {
+        loadFragment(new PeopleFragment());
     }
 }
