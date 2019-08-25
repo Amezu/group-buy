@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .replace(R.id.fragment_container, fragment)
                     .commit();
 
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("GroupBuy");
+            actionBar.show();
+
             return true;
         }
         return false;
