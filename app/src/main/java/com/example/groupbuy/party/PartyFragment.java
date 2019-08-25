@@ -39,11 +39,11 @@ public class PartyFragment extends Fragment {
     public PartyFragment() {
     }
 
-    public static PartyFragment newInstance(String groupName) {
+    public static PartyFragment newInstance(String partyName) {
         PartyFragment partyFragment = new PartyFragment();
 
         Bundle args = new Bundle();
-        args.putString("groupName", groupName);
+        args.putString("partyName", partyName);
         partyFragment.setArguments(args);
 
         return partyFragment;
@@ -52,7 +52,7 @@ public class PartyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_with_fab, container, false);
+        return inflater.inflate(R.layout.fragment_party, container, false);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class PartyFragment extends Fragment {
 
     public void openAddProductActivity() {
         Intent intent = new Intent(getActivity(), AddProductActivity.class);
-        intent.putExtra("groupName", getArguments().getString("groupName", ""));
+        intent.putExtra("partyName", getArguments().getString("partyName", ""));
         startActivity(intent);
     }
 }
