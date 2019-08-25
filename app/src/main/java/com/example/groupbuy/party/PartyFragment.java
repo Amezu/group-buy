@@ -63,27 +63,11 @@ public class PartyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        loadPeople();
-        loadProducts();
-        
-        ImageView invitePerson = getView().findViewById(R.id.addPeopleButton);
-        invitePerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddProductActivity();
-            }
-        });
+        loadPeoplePart();
+        loadProductsPart();
     }
 
-    private void loadProducts() {
+    private void loadProductsPart() {
         String[] title = {"soki - 2l", "wódka - 3l", "chipsy - 2 paczki"};
         String[] subtitle = {"(0 propozycji)", "(1 propozycja)", "Ola, cheetosy"};
         Boolean[] bought = {false, false, true};
@@ -112,9 +96,17 @@ public class PartyFragment extends Fragment {
                     }
                 }
         );
+
+        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddProductActivity();
+            }
+        });
     }
 
-    private void loadPeople() {
+    private void loadPeoplePart() {
         String[] people = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
         String peopleShort;
         switch (people.length) {
@@ -137,6 +129,14 @@ public class PartyFragment extends Fragment {
 
         TextView peopleShortView = getView().findViewById(R.id.peopleShortText);
         peopleShortView.setText(peopleShort);
+
+        ImageView invitePerson = getView().findViewById(R.id.addPeopleButton);
+        invitePerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     public void openAddProductActivity() {
