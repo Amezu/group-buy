@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,7 +23,16 @@ public class AddPersonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
+
         loadPeopleList();
+        ListView peopleListView = findViewById(R.id.list);
+        peopleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = String.valueOf(parent.getItemAtPosition(position));
+                addPerson(name);
+            }
+        });
     }
 
     private void loadPeopleList() {
@@ -32,11 +42,10 @@ public class AddPersonActivity extends AppCompatActivity {
         view.setAdapter(adapter);
     }
 
-    public void addPerson(View view) {
-        TextView nameView = findViewById(R.id.edit);
-        String name = nameView.getText().toString();
+    private void addPerson(String name) {
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
         new HttpRequestDebug(this).addPersonToParty(createHashMap(name));
+        finish();
     }
 
     private Map createHashMap(String login){
