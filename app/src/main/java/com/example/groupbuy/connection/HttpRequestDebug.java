@@ -158,4 +158,7 @@ public class HttpRequestDebug {
 
     }
 
+    public void addPersonToParty(Map body) {
+
+    }
 }
