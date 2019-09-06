@@ -56,7 +56,7 @@ public class PeopleFragment extends Fragment {
     }
 
     private void openAddPersonActivity() {
-        Intent intent = new Intent(getActivity(), AddPartyActivity.class);
+        Intent intent = new Intent(getActivity(), AddPersonActivity.class);
         startActivity(intent);
     }
 }
