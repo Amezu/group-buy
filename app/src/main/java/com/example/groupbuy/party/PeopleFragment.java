@@ -32,12 +32,7 @@ public class PeopleFragment extends Fragment {
         loadPeopleList();
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddPersonActivity();
-            }
-        });
+        fab.setOnClickListener(view -> openAddPersonActivity());
     }
 
     private void loadPeopleList() {
@@ -45,14 +40,6 @@ public class PeopleFragment extends Fragment {
         ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, people);
         ListView view = getView().findViewById(R.id.list);
         view.setAdapter(adapter);
-
-        FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     private void openAddPersonActivity() {
