@@ -1,5 +1,6 @@
 package com.example.groupbuy.party;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +30,17 @@ public class PeopleFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         loadPeopleList();
+
+        FloatingActionButton fab = getView().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAddPersonActivity();
+            }
+        });
     }
 
-    public void loadPeopleList() {
+    private void loadPeopleList() {
         String[] people = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
         ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, people);
         ListView view = getView().findViewById(R.id.list);
@@ -44,5 +53,10 @@ public class PeopleFragment extends Fragment {
 
             }
         });
+    }
+
+    private void openAddPersonActivity() {
+        Intent intent = new Intent(getActivity(), AddPartyActivity.class);
+        startActivity(intent);
     }
 }
