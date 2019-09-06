@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +28,8 @@ public class AddProductActivity extends AppCompatActivity {
         actionBar.show();
     }
 
-    public void addProduct(android.view.View view) {
-        TextView nameView = (TextView) findViewById(R.id.productNameEdit);
+    public void addProduct(View view) {
+        TextView nameView = findViewById(R.id.productNameEdit);
         String name = nameView.getText().toString();
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
 
