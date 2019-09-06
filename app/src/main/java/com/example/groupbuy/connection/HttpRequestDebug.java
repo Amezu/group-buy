@@ -130,7 +130,7 @@ public class HttpRequestDebug {
         }
     }
 
-    public void addGroup(Map body) {
+    public void addParty(Map body) {
         Session session = Session.getInstance(context);
         sendRequest(body, session.getID(), "groups/", Request.Method.POST, new Callback() {
             @Override

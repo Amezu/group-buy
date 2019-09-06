@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.HttpRequestDebug;
-import com.example.groupbuy.connection.Session;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,13 +19,11 @@ public class AddPartyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_party);
     }
 
-    public void addGroup(android.view.View view) {
-        TextView nameView = (TextView) findViewById(R.id.groupNameEdit);
+    public void addParty(android.view.View view) {
+        TextView nameView = findViewById(R.id.groupNameEdit);
         String name = nameView.getText().toString();
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
-        Session session = Session.getInstance(getApplicationContext());
-        HttpRequestDebug httpRequest = new HttpRequestDebug(this);
-        httpRequest.addGroup(createHashMap(name));
+        new HttpRequestDebug(this).addParty(createHashMap(name));
     }
 
     private Map createHashMap(String groupName){
