@@ -81,7 +81,7 @@ public class PartyListFragment extends Fragment {
         });
     }
 
-    public void createGroupList(JSONObject s) {
+    private void createGroupList(JSONObject s) {
         List<String> groups = new ArrayList<>();
         try {
             JSONArray array = s.getJSONArray("groupList");
@@ -118,12 +118,12 @@ public class PartyListFragment extends Fragment {
         });
     }
 
-    public void openAddGroupActivity() {
+    private void openAddGroupActivity() {
         Intent intent = new Intent(getActivity(), AddPartyActivity.class);
         startActivity(intent);
     }
 
-    public void openProductsList(String group) {
+    private void openProductsList(String group) {
         MainActivity activity = (MainActivity) getActivity();
         activity.openProductsFragment(group);
     }

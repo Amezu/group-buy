@@ -29,10 +29,8 @@ public class AddPartyActivity extends AppCompatActivity {
         Session session = Session.getInstance(getApplicationContext());
         HttpRequestDebug httpRequest = new HttpRequestDebug(this);
         httpRequest.addGroup(createHashMap(name));
-
-//        TODO: send adding request
-
     }
+
     private Map createHashMap(String groupName){
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("groupName", groupName);
