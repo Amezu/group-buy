@@ -140,6 +140,6 @@ public class PartyFragment extends Fragment {
 
     private void openInvitedPeopleFragment() {
         MainActivity activity = (MainActivity) getActivity();
-        activity.openPeopleFragment();
+        activity.openPeopleFragment(getArguments().getString("partyName", ""));
     }
 }

@@ -82,15 +82,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    public void openProductsFragment(String groupName) {
-        loadFragment(PartyFragment.newInstance(groupName));
+    public void openProductsFragment(String party) {
+        loadFragment(PartyFragment.newInstance(party));
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(groupName);
+        actionBar.setTitle(party);
         actionBar.show();
     }
 
-    public void openPeopleFragment() {
+    public void openPeopleFragment(String party) {
         loadFragment(new PeopleFragment());
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(party);
+        actionBar.setSubtitle("Guests");
+        actionBar.show();
     }
 }
