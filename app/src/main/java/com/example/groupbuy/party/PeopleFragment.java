@@ -44,6 +44,7 @@ public class PeopleFragment extends Fragment {
 
     private void openAddPersonActivity() {
         Intent intent = new Intent(getActivity(), AddPersonActivity.class);
+        intent.putExtra("partyName", getArguments().getString("partyName", ""));
         startActivity(intent);
     }
 }
