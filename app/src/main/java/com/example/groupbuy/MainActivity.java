@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void openPeopleFragment(String party) {
-        loadFragment(new PeopleFragment());
+        loadFragment(PeopleFragment.newInstance(party));
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(party);

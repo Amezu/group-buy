@@ -1,7 +1,9 @@
 package com.example.groupbuy.party;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddPersonActivity extends AppCompatActivity {
+    String party;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,14 @@ public class AddPersonActivity extends AppCompatActivity {
         loadPeopleList("");
         addPersonWhenItemClicked();
         searchPersonByName();
+
+        Intent intent = getIntent();
+        party = intent.getStringExtra("partyName");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(party);
+        actionBar.setSubtitle("Invite guest");
+        actionBar.show();
     }
 
     private void loadPeopleList(final String search) {
