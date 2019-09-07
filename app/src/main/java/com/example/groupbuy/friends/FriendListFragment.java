@@ -15,9 +15,9 @@ import com.example.groupbuy.R;
 import com.example.groupbuy.party.AddPersonActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class FriendsFragment extends Fragment {
+public class FriendListFragment extends Fragment {
 
-    public FriendsFragment() {
+    public FriendListFragment() {
     }
 
     @Override
