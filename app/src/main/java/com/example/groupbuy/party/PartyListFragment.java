@@ -102,4 +102,9 @@ public class PartyListFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         activity.openPartyFragment(group);
     }
+
+    @Override
+    public String toString() {
+        return "Parties";
+    }
 }

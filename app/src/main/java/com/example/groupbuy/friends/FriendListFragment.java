@@ -48,4 +48,9 @@ public class FriendListFragment extends Fragment {
         intent.putExtra("partyName", getArguments().getString("partyName", ""));
         startActivity(intent);
     }
+
+    @Override
+    public String toString() {
+        return "Friends";
+    }
 }
