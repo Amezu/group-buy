@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.groupbuy.R;
 
 public class AddProductActivity extends AppCompatActivity {
-    
+
     String party;
 
     @Override
@@ -26,6 +26,7 @@ public class AddProductActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(party);
+        actionBar.setSubtitle("Add product");
         actionBar.show();
     }
 
