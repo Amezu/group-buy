@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onBackPressed() {
-//        TODO: Implement going back when all activities will be changed to fragments
-//         https://stackoverflow.com/questions/5448653/how-to-implement-onbackpressed-in-fragments
-//         or https://medium.com/@Wingnut/onbackpressed-for-fragments-357b2bf1ce8e
-
         long now = System.currentTimeMillis();
 
         if (now - time < 1000) {
