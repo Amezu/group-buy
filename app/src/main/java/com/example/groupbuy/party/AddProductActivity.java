@@ -13,7 +13,8 @@ import android.widget.Toast;
 import com.example.groupbuy.R;
 
 public class AddProductActivity extends AppCompatActivity {
-    String group;
+    
+    String party;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,10 @@ public class AddProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
 
         Intent intent = getIntent();
-        group = intent.getStringExtra("groupName");
+        party = intent.getStringExtra("partyName");
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(group);
+        actionBar.setTitle(party);
         actionBar.show();
     }
 
