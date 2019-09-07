@@ -78,14 +78,11 @@ public class PartyFragment extends Fragment {
         productListView.setAdapter(productListAdapter);
 
         productListView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Product product = (Product) parent.getItemAtPosition(position);
-                        product.changeStatus();
-                        if (product.bought)
-                            Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
-                    }
+                (parent, view, position, id) -> {
+                    Product product = (Product) parent.getItemAtPosition(position);
+                    product.changeStatus();
+                    if (product.bought)
+                        Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
                 }
         );
 
@@ -123,35 +120,25 @@ public class PartyFragment extends Fragment {
         peopleShortView.setText(peopleShort);
 
         ImageView invitePerson = getView().findViewById(R.id.addPeopleButton);
-        invitePerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openInvitePersonActivity();
-            }
-        });
+        invitePerson.setOnClickListener(v -> openInvitePersonActivity());
 
         View peopleFrame = getView().findViewById(R.id.peopleFrame);
-        peopleFrame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openInvitedPeopleFragment();
-            }
-        });
+        peopleFrame.setOnClickListener(v -> openInvitedPeopleFragment());
     }
 
-    public void openAddProductActivity() {
+    private void openAddProductActivity() {
         Intent intent = new Intent(getActivity(), AddProductActivity.class);
         intent.putExtra("partyName", getArguments().getString("partyName", ""));
         startActivity(intent);
     }
 
-    public void openInvitePersonActivity() {
-//        Intent intent = new Intent(getActivity(), AddProductActivity.class);
-//        intent.putExtra("partyName", getArguments().getString("partyName", ""));
-//        startActivity(intent);
+    private void openInvitePersonActivity() {
+        Intent intent = new Intent(getActivity(), AddPersonActivity.class);
+        intent.putExtra("partyName", getArguments().getString("partyName", ""));
+        startActivity(intent);
     }
 
-    public void openInvitedPeopleFragment() {
+    private void openInvitedPeopleFragment() {
         MainActivity activity = (MainActivity) getActivity();
         activity.openPeopleFragment();
     }
