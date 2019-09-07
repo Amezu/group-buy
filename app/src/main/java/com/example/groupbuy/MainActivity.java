@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(party);
-        actionBar.setSubtitle("Guests");
         actionBar.show();
     }
 }
