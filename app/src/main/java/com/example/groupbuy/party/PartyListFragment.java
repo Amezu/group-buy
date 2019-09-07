@@ -21,22 +21,33 @@ import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.Callback;
 import com.example.groupbuy.connection.HttpRequestDebug;
+import com.example.groupbuy.connection.JsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PartyListFragment extends Fragment {
-    HttpRequestDebug httpRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_with_fab, null);
+        return inflater.inflate(R.layout.list_with_fab, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        new HttpRequestDebug(getActivity()).loadPartyList(new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                loadPartyList(response);
+
+                FloatingActionButton fab = getView().findViewById(R.id.fab);
+                fab.setOnClickListener(view -> openAddGroupActivity());
+            }
+        });
     }
 
     @Override
@@ -59,63 +70,27 @@ public class PartyListFragment extends Fragment {
 
         Toast.makeText(getActivity(), item.getTitle() + " " + view.getText(), Toast.LENGTH_SHORT).show();
         if (item.getTitle() == "Rename") {
-        }
-        else if (item.getTitle() == "Delete") {
-        }
-        else {
-            return false;
-        }
+        } else if (item.getTitle() == "Delete") {
+        } else return false;
+
         return true;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    private void loadPartyList(JSONObject jsonObject) {
+        ListAdapter partiesAdapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                JsonParser.parsePartyList(jsonObject));
+        ListView partiesView = getView().findViewById(R.id.list);
 
-        httpRequest = new HttpRequestDebug(getActivity());
-        httpRequest.loadGroupList(new Callback() {
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                createGroupList(response);
-            }
-        });
-    }
-
-    private void createGroupList(JSONObject s) {
-        List<String> groups = new ArrayList<>();
-        try {
-            JSONArray array = s.getJSONArray("groupList");
-            for(int i=0; i<array.length(); i++) {
-                JSONObject object = array.getJSONObject(i);
-                groups.add(object.getString("groupName"));
-            }
-        }
-        catch(JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-        ListAdapter groupListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, groups);
-        ListView groupListView = getView().findViewById(R.id.list);
-        groupListView.setAdapter(groupListAdapter);
-        registerForContextMenu(groupListView);
-
-        groupListView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String group = String.valueOf(parent.getItemAtPosition(position));
-                        openProductsList(group);
-                    }
+        partiesView.setAdapter(partiesAdapter);
+        registerForContextMenu(partiesView);
+        partiesView.setOnItemClickListener(
+                (parent, view, position, id) -> {
+                    String group = String.valueOf(parent.getItemAtPosition(position));
+                    openPartyFragment(group);
                 }
         );
-
-        FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddGroupActivity();
-            }
-        });
     }
 
     private void openAddGroupActivity() {
@@ -123,8 +98,8 @@ public class PartyListFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void openProductsList(String group) {
+    private void openPartyFragment(String group) {
         MainActivity activity = (MainActivity) getActivity();
-        activity.openProductsFragment(group);
+        activity.openPartyFragment(group);
     }
 }

@@ -94,7 +94,7 @@ public class HttpRequestDebug {
         context.startActivity(intent);
     }
 
-    public void loadGroupList(Callback callback) {
+    public void loadPartyList(Callback callback) {
         try {
             JSONObject object = new JSONObject();
             JSONArray array = new JSONArray();

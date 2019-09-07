@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.R;
@@ -17,6 +18,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class PeopleFragment extends Fragment {
 
     public PeopleFragment() {
+    }
+
+    public static PeopleFragment newInstance(String partyName) {
+        PeopleFragment peopleFragment = new PeopleFragment();
+
+        Bundle args = new Bundle();
+        args.putString("partyName", partyName);
+        peopleFragment.setArguments(args);
+
+        return peopleFragment;
     }
 
     @Override
