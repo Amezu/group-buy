@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.connection.HttpRequestDebug;
+import com.example.groupbuy.friends.FriendListFragment;
 import com.example.groupbuy.party.PartyFragment;
 import com.example.groupbuy.party.PartyListFragment;
 import com.example.groupbuy.party.PeopleFragment;
@@ -18,9 +19,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final SparseArray<Fragment> FRAGMENT_BY_ID = new SparseArray<>();
-
     static {
         FRAGMENT_BY_ID.put(R.id.navigation_parties, new PartyListFragment());
+        FRAGMENT_BY_ID.put(R.id.navigation_friends, new FriendListFragment());
 //        FRAGMENT_BY_ID.put(R.id.navigation_profile, new ProfileFragment());
     }
 
@@ -68,10 +69,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onBackPressed() {
-//        TODO: Implement going back when all activities will be changed to fragments
-//         https://stackoverflow.com/questions/5448653/how-to-implement-onbackpressed-in-fragments
-//         or https://medium.com/@Wingnut/onbackpressed-for-fragments-357b2bf1ce8e
-
         long now = System.currentTimeMillis();
 
         if (now - time < 1000) {
