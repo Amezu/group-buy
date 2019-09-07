@@ -24,12 +24,8 @@ import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.connection.JsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PartyListFragment extends Fragment {
 
@@ -92,7 +88,7 @@ public class PartyListFragment extends Fragment {
         partiesView.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     String group = String.valueOf(parent.getItemAtPosition(position));
-                    openProductsList(group);
+                    openPartyFragment(group);
                 }
         );
     }
@@ -102,8 +98,8 @@ public class PartyListFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void openProductsList(String group) {
+    private void openPartyFragment(String group) {
         MainActivity activity = (MainActivity) getActivity();
-        activity.openProductsFragment(group);
+        activity.openPartyFragment(group);
     }
 }

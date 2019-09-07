@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    public void openProductsFragment(String party) {
+    public void openPartyFragment(String party) {
         loadFragment(PartyFragment.newInstance(party));
 
         ActionBar actionBar = getSupportActionBar();
