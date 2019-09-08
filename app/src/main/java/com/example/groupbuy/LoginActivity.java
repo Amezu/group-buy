@@ -7,13 +7,14 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-    HttpRequestDebug httpRequest = new HttpRequestDebug(this);
+    HttpRequest httpRequest = new HttpRequest(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

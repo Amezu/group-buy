@@ -48,9 +48,23 @@ public class Session {
         return pref.getString("ID","");
     }
 
-    public void saveSession(Map data, String ID) {
+
+    private void setUserID(String userID) {
+        pref.edit().putString("userID", userID).apply();
+    }
+
+    private void unsetUserID() {
+        pref.edit().remove("ID").apply();
+    }
+
+    public String getUserID() {
+        return pref.getString("userID","");
+    }
+
+    public void saveSession(Map data, String id, String userId) {
         this.setUsername(Objects.requireNonNull(data.get("username")).toString());
-        this.setID(ID);
+        this.setID(id);
+        this.setUserID(userId);
     }
 
     public Map getData(){
@@ -63,5 +77,6 @@ public class Session {
     public void clearSession(){
         unsetUsername();
         unsetID();
+        unsetUserID();
     }
 }

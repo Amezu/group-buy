@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.friends.FriendListFragment;
 import com.example.groupbuy.party.PartyFragment;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     boolean logout() {
-        new HttpRequestDebug(this).logOut();
+        new HttpRequest(this).logOut();
         return true;
     }
 

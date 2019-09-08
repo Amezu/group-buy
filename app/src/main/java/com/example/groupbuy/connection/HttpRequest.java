@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.StartActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,14 +28,14 @@ public class HttpRequest {
     private Context context;
     private String TAG;
 
-    private HttpRequest(Context activity) {
+    public HttpRequest(Context activity) {
         context = activity;
         TAG = context.getClass().getName();
     }
 
     private void sendRequest(final Map data, final String sessionId, final String path, int method, final Callback callback) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        String url = "http://ec2-3-120-128-193.eu-central-1.compute.amazonaws.com:8080/";
+        String url = "http://ec2-52-57-197-241.eu-central-1.compute.amazonaws.com:8080/";
         JsonObjectRequest JSONObj = new JsonObjectRequest(method, url + path, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -80,7 +81,7 @@ public class HttpRequest {
                 response.toString();
                 if (response.get("status").equals(true)) {
                     Session session = Session.getInstance(context);
-                    session.saveSession(body, response.getString("id"));
+                    session.saveSession(body, response.getString("id"), response.getString("userId"));
                     Intent intent = new Intent();
                     intent.setClass(context, MainActivity.class);
                     context.startActivity(intent);
@@ -95,7 +96,7 @@ public class HttpRequest {
             public void success(JSONObject response) throws JSONException {
                 if (response.get("status").equals(true)) {
                     Session session = Session.getInstance(context);
-                    session.saveSession(body, response.getString("id"));
+                    session.saveSession(body, response.getString("id"), response.getString("userId"));
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
                 }
@@ -130,11 +131,15 @@ public class HttpRequest {
             public void success(JSONObject response) throws JSONException {
                 Intent intent = new Intent(context, StartActivity.class);
                 context.startActivity(intent);
+                session.clearSession();
             }
 
             @Override
             public void error() {
                 Toast.makeText(context, "Logout failed", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, StartActivity.class);
+                context.startActivity(intent);
+                session.clearSession();
             }
         });
     }
@@ -143,6 +148,8 @@ public class HttpRequest {
         Session session = Session.getInstance(context);
         sendRequest(new HashMap(), session.getID(), "users/groups", Request.Method.GET, callback);
     }
+
+
 
     public void addGroup(Map body) {
         Session session = Session.getInstance(context);
@@ -195,5 +202,59 @@ public class HttpRequest {
             }
         });
     }
+    public void deleteParty(String group_id) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "groups/" + group_id, Request.Method.DELETE, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                if (response.get("status").equals(true)) {
 
+                }
+            }
+
+            @Override
+            public void error() {
+                //TODO wypisz błąd na ekran
+            }
+        });
+    }
+    public void loadPartyList(Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "users/" + session.getUserID() + "/groups", Request.Method.GET, callback);
+    }
+
+    public void addParty(Map body) {
+        Session session = Session.getInstance(context);
+        sendRequest(body, session.getID(), "groups/", Request.Method.POST, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                if (response.get("status").equals(true)) {
+                    final Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void error() {
+                //TODO wypisz błąd na ekran
+            }
+        });
+    }
+
+    public void renameParty(String group_id, Map body) {
+        Session session = Session.getInstance(context);
+        sendRequest(body, session.getID(), "/groups/" + group_id, Request.Method.PUT, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                if (response.get("status").equals(true)) {
+
+                }
+            }
+
+            @Override
+            public void error() {
+                //TODO wypisz błąd na ekran
+            }
+        });
+    }
 }

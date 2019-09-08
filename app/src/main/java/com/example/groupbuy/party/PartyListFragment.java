@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.Callback;
+import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.connection.JsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,8 +28,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PartyListFragment extends Fragment {
+import java.util.List;
 
+public class PartyListFragment extends Fragment {
+    List<Party> partyList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,8 +41,11 @@ public class PartyListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        loadParties();
+    }
 
-        new HttpRequestDebug(getActivity()).loadPartyList(new Callback() {
+    private void loadParties(){
+        new HttpRequest(getActivity()).loadPartyList(new Callback() {
             @Override
             public void success(JSONObject response) throws JSONException {
                 loadPartyList(response);
@@ -55,9 +61,9 @@ public class PartyListFragment extends Fragment {
         if (v.getId() == R.id.list) {
             ListView lv = (ListView) v;
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            String obj = (String) lv.getItemAtPosition(acmi.position);
+            Party obj = (Party) lv.getItemAtPosition(acmi.position);
 
-            menu.setHeaderTitle(obj);
+            menu.setHeaderTitle(obj.partyName);
             menu.add("Rename");
             menu.add("Delete");
         }
@@ -66,21 +72,31 @@ public class PartyListFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        TextView view = (TextView) info.targetView;
 
+        TextView view = (TextView) info.targetView;
+        int id = info.position;
         Toast.makeText(getActivity(), item.getTitle() + " " + view.getText(), Toast.LENGTH_SHORT).show();
         if (item.getTitle() == "Rename") {
+//            Intent intent = new Intent(getActivity(), RenamePartyActivity.class);
+//            intent.putExtra("partyId", partyList.get(id).id);
+//            intent.putExtra("partyName", partyList.get(id).partyName);
+//            startActivity(intent);
+//            loadParties();
         } else if (item.getTitle() == "Delete") {
+            new HttpRequest(getActivity()).deleteParty(partyList.get(id).id);
+            loadParties();
         } else return false;
 
         return true;
     }
 
+
+
     private void loadPartyList(JSONObject jsonObject) {
+        partyList = JsonParser.parsePartyList(jsonObject);
         ListAdapter partiesAdapter = new ArrayAdapter<>(
                 getActivity(),
-                android.R.layout.simple_list_item_1,
-                JsonParser.parsePartyList(jsonObject));
+                android.R.layout.simple_list_item_1, partyList);
         ListView partiesView = getView().findViewById(R.id.list);
 
         partiesView.setAdapter(partiesAdapter);
@@ -105,4 +121,6 @@ public class PartyListFragment extends Fragment {
     public String toString() {
         return "Parties";
     }
+
+
 }
