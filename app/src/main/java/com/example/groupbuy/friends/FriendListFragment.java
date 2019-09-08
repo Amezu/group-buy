@@ -12,7 +12,6 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.R;
-import com.example.groupbuy.party.AddPersonActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FriendListFragment extends Fragment {
@@ -33,7 +32,7 @@ public class FriendListFragment extends Fragment {
         loadFriendsList();
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(view -> openAddPersonActivity());
+        fab.setOnClickListener(view -> openAddFriendActivity());
     }
 
     private void loadFriendsList() {
@@ -43,9 +42,8 @@ public class FriendListFragment extends Fragment {
         view.setAdapter(adapter);
     }
 
-    private void openAddPersonActivity() {
-        Intent intent = new Intent(getActivity(), AddPersonActivity.class);
-        intent.putExtra("partyName", getArguments().getString("partyName", ""));
+    private void openAddFriendActivity() {
+        Intent intent = new Intent(getActivity(), AddFriendActivity.class);
         startActivity(intent);
     }
 
