@@ -27,7 +27,7 @@ public class AddPartyActivity extends AppCompatActivity {
     }
 
     public void addParty(android.view.View view) {
-        TextView nameView = findViewById(R.id.groupNameEdit);
+        TextView nameView = findViewById(R.id.partyNameEdit);
         String name = nameView.getText().toString();
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
         new HttpRequestDebug(this).addParty(createHashMap(name));

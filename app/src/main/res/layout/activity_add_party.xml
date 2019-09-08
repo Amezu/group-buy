@@ -17,26 +17,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/addGroupButton"
+            android:id="@+id/addPartyButton"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_marginTop="10dp"
             android:onClick="addParty"
-            android:text="@string/add_group_create"
+            android:text="@string/add_party_create"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/groupNameEdit" />
+            app:layout_constraintTop_toBottomOf="@+id/partyNameEdit" />
 
         <EditText
-            android:id="@+id/groupNameEdit"
+            android:id="@+id/partyNameEdit"
             android:layout_width="wrap_content"
             android:layout_height="41dp"
             android:ems="10"
-            android:hint="@string/add_group_group_name"
+            android:hint="@string/add_party_name"
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/addGroupButton"
+            app:layout_constraintBottom_toTopOf="@+id/addPartyButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
