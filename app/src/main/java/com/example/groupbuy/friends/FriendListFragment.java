@@ -37,7 +37,7 @@ public class FriendListFragment extends Fragment {
 
     private void loadFriendsList() {
         String[] people = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
-        ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, people);
+        ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, people);
         ListView view = getView().findViewById(R.id.list);
         view.setAdapter(adapter);
     }
