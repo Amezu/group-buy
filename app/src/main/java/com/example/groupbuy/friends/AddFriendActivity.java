@@ -37,7 +37,7 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private void loadPeopleList(final String search) {
         String[] allPeople = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
-        String[] people = Arrays.stream(allPeople).filter(name -> name.toLowerCase().contains(search.toLowerCase())).toArray(String[]::new);
+        String[] people = search.isEmpty() ? new String[]{} : Arrays.stream(allPeople).filter(name -> name.toLowerCase().contains(search.toLowerCase())).toArray(String[]::new);
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, people);
         ListView view = findViewById(R.id.list);
         view.setAdapter(adapter);
@@ -60,10 +60,12 @@ public class AddFriendActivity extends AppCompatActivity {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         });
     }
 
@@ -73,7 +75,7 @@ public class AddFriendActivity extends AppCompatActivity {
         finish();
     }
 
-    private Map createHashMap(String login){
+    private Map createHashMap(String login) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("login", login);
         return data;
