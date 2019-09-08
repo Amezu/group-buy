@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.groupbuy.R;
+import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
 
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class AddPartyActivity extends AppCompatActivity {
         TextView nameView = findViewById(R.id.partyNameEdit);
         String name = nameView.getText().toString();
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
-        new HttpRequestDebug(this).addParty(createHashMap(name));
+        new HttpRequest(this).addParty(createHashMap(name));
     }
 
     private Map createHashMap(String groupName){
