@@ -15,6 +15,7 @@ import com.example.groupbuy.party.PartyFragment;
 import com.example.groupbuy.party.PartyListFragment;
 import com.example.groupbuy.party.PeopleFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(this);
+        navigation.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
 
         loadFragment(new PartyListFragment());
     }
