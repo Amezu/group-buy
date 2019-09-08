@@ -1,6 +1,8 @@
 package com.example.groupbuy.party;
 
 import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,11 @@ public class AddPartyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_party);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Parties");
+        actionBar.setSubtitle("Create new party");
+        actionBar.show();
     }
 
     public void addParty(android.view.View view) {
