@@ -36,10 +36,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navigation.setOnNavigationItemSelectedListener(this);
 
         loadFragment(new PartyListFragment());
+    }
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Parties");
-        actionBar.show();
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.navigation_logout)
+            return logout();
+        else {
+            return loadFragment(FRAGMENT_BY_ID.get(menuItem.getItemId()));
+        }
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -49,24 +54,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .replace(R.id.fragment_container, fragment)
                     .commit();
 
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == R.id.navigation_logout)
-            return logout();
-        else {
-            final Fragment fragment = FRAGMENT_BY_ID.get(menuItem.getItemId());
-
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle(fragment.toString());
             actionBar.show();
 
-            return loadFragment(fragment);
+            return true;
         }
+        return false;
     }
 
     boolean logout() {
