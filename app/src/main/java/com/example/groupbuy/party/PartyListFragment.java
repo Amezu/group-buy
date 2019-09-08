@@ -85,12 +85,10 @@ public class PartyListFragment extends Fragment {
 
         partiesView.setAdapter(partiesAdapter);
         registerForContextMenu(partiesView);
-        partiesView.setOnItemClickListener(
-                (parent, view, position, id) -> {
-                    String group = String.valueOf(parent.getItemAtPosition(position));
-                    openPartyFragment(group);
-                }
-        );
+        partiesView.setOnItemClickListener((parent, view, position, id) -> {
+            String group = String.valueOf(parent.getItemAtPosition(position));
+            openPartyFragment(group);
+        });
     }
 
     private void openAddGroupActivity() {
