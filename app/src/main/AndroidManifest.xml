@@ -12,11 +12,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".friends.AddFriendActivity"></activity>
+        <activity android:name=".friends.AddFriendActivity" />
         <activity android:name=".party.AddPersonActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".party.AddProductActivity" />
         <activity android:name=".party.AddPartyActivity" />
         <activity android:name=".RegisterActivity" />
