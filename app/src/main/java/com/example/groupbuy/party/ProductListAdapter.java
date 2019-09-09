@@ -10,22 +10,17 @@ import android.widget.TextView;
 
 import com.example.groupbuy.R;
 
-public class ProductListAdapter extends ArrayAdapter<String> {
+public class ProductListAdapter extends ArrayAdapter<Product> {
     private final Activity context;
-    private final String[] productName;
-    private final String[] subtitle;
-    private final Boolean[] bought;
-    private final Boolean[] clickable;
+    private final Product[] products;
 
-    public ProductListAdapter(Activity context, String[] productName, String[] subtitle, Boolean[] bought, Boolean[] clickable) {
-        super(context, R.layout.product_row, productName);
-        // TODO Auto-generated constructor stub  
+
+
+    public ProductListAdapter(Activity context, Product[] products) {
+        super(context, R.layout.product_row, products);
 
         this.context = context;
-        this.productName = productName;
-        this.subtitle = subtitle;
-        this.bought = bought;
-        this.clickable = clickable;
+        this.products = products;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -36,10 +31,13 @@ public class ProductListAdapter extends ArrayAdapter<String> {
         TextView subtitleText = rowView.findViewById(R.id.subtitle);
         CheckBox checkBox = rowView.findViewById(R.id.checkbox);
 
-        titleText.setText(productName[position]);
-        subtitleText.setText(subtitle[position]);
-        checkBox.setChecked(bought[position]);
-        checkBox.setEnabled(clickable[position]);
+        Product product = products[position];
+        String title = String.format("%s (%.2f\u200E$)", product.getName(), product.getPrice());
+
+        titleText.setText(title);
+        subtitleText.setText(product.getUser());
+        checkBox.setChecked(product.isBought());
+        checkBox.setEnabled(product.isMine());
 
         return rowView;
     }
