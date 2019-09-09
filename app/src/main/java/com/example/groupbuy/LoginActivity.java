@@ -33,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         EditText etLogin = (EditText) findViewById(R.id.etLogin);
         EditText etPassword = (EditText) findViewById(R.id.etPassword);
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put( "username", etLogin.getText().toString());
-        data.put( "password", etPassword.getText().toString());
+        data.put("username", etLogin.getText().toString());
+        data.put("password", etPassword.getText().toString());
         return data;
     }
 }

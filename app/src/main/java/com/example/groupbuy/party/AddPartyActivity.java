@@ -1,11 +1,11 @@
 package com.example.groupbuy.party;
 
 import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.HttpRequestDebug;
@@ -33,7 +33,7 @@ public class AddPartyActivity extends AppCompatActivity {
         new HttpRequestDebug(this).addParty(createHashMap(name));
     }
 
-    private Map createHashMap(String groupName){
+    private Map createHashMap(String groupName) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("groupName", groupName);
         return data;

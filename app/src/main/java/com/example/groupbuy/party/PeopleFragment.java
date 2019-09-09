@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.R;

@@ -54,7 +54,7 @@ public class HttpRequest {
                         callback.error();
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();

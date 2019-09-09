@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final SparseArray<Fragment> FRAGMENT_BY_ID = new SparseArray<>();
+
     static {
         FRAGMENT_BY_ID.put(R.id.navigation_parties, new PartyListFragment());
         FRAGMENT_BY_ID.put(R.id.navigation_friends, new FriendListFragment());

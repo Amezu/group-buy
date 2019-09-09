@@ -68,12 +68,7 @@ public class PartyFragment extends Fragment {
         );
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddProductActivity();
-            }
-        });
+        fab.setOnClickListener(view -> openAddProductActivity());
     }
 
     private void loadPeoplePart() {
