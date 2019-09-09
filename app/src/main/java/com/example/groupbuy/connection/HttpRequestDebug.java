@@ -99,9 +99,9 @@ public class HttpRequestDebug {
             JSONObject object = new JSONObject();
             JSONArray array = new JSONArray();
             JSONObject group1 = new JSONObject();
-            group1.put("groupName", "First group");
+            group1.put("groupName", "First party");
             JSONObject group2 = new JSONObject();
-            group2.put("groupName", "Second group");
+            group2.put("groupName", "Second party");
             array.put(group1);
             array.put(group2);
             object.put("groupList", array);
