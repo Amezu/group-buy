@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.friends.FriendListFragment;
+import com.example.groupbuy.groups.GroupListFragment;
 import com.example.groupbuy.party.PartyFragment;
 import com.example.groupbuy.party.PartyListFragment;
 import com.example.groupbuy.party.PeopleFragment;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     static {
         FRAGMENT_BY_ID.put(R.id.navigation_parties, new PartyListFragment());
         FRAGMENT_BY_ID.put(R.id.navigation_friends, new FriendListFragment());
+        FRAGMENT_BY_ID.put(R.id.navigation_groups, new GroupListFragment());
 //        FRAGMENT_BY_ID.put(R.id.navigation_profile, new ProfileFragment());
     }
 
@@ -100,5 +102,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(party);
         actionBar.show();
+    }
+
+    public void openGroupFragment(String group) {
+//        loadFragment(GroupFragment.newInstance(party));
+//
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setTitle(group);
+//        actionBar.show();
     }
 }
