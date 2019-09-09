@@ -22,4 +22,18 @@ public class JsonParser {
         }
         return parties;
     }
+
+    public static List<String> parseGroupList(JSONObject s) {
+        List<String> parties = new ArrayList<>();
+        try {
+            JSONArray array = s.getJSONArray("list");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                parties.add(object.getString("name"));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return parties;
+    }
 }
