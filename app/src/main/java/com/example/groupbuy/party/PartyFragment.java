@@ -58,6 +58,10 @@ public class PartyFragment extends Fragment {
         ListView productListView = getView().findViewById(R.id.list);
         productListView.setAdapter(productListAdapter);
 
+//        TODO: Support of thumbs up button
+//        TODO: Support of buying items
+//        TODO: Sort products from bought to not bought
+
         productListView.setOnItemClickListener(
                 (parent, view, position, id) -> {
                     Product product = (Product) parent.getItemAtPosition(position);
