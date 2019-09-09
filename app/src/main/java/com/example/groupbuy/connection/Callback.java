@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 public abstract class Callback {
 
-   abstract public void success(JSONObject response) throws JSONException;
-   public void error() {}
+    abstract public void success(JSONObject response) throws JSONException;
+
+    public void error() {
+    }
 }

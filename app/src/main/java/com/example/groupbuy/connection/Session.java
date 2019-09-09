@@ -11,21 +11,18 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Session {
     private static Session instance;
-    public static Session getInstance(final Context context){
-        if (instance == null) {
-            instance = new Session(context);
-        }
-        return instance;
-    }
-
     private SharedPreferences pref;
-    private Session(Context  context) {
+
+    private Session(Context context) {
         // TODO Auto-generated constructor stub
         pref = context.getSharedPreferences("MyPref", MODE_PRIVATE);
     }
 
-    private void setUsername(String username) {
-        pref.edit().putString("username", username).apply();
+    public static Session getInstance(final Context context) {
+        if (instance == null) {
+            instance = new Session(context);
+        }
+        return instance;
     }
 
     private void unsetUsername() {
@@ -33,11 +30,11 @@ public class Session {
     }
 
     public String getUsername() {
-        return pref.getString("username","");
+        return pref.getString("username", "");
     }
 
-    private void setID(String ID) {
-        pref.edit().putString("ID", ID).apply();
+    private void setUsername(String username) {
+        pref.edit().putString("username", username).apply();
     }
 
     private void unsetID() {
@@ -45,7 +42,11 @@ public class Session {
     }
 
     public String getID() {
-        return pref.getString("ID","");
+        return pref.getString("ID", "");
+    }
+
+    private void setID(String ID) {
+        pref.edit().putString("ID", ID).apply();
     }
 
 
@@ -67,14 +68,14 @@ public class Session {
         this.setUserID(userId);
     }
 
-    public Map getData(){
+    public Map getData() {
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put( "username", getUsername());
-        data.put( "id", getID());
+        data.put("username", getUsername());
+        data.put("id", getID());
         return data;
     }
 
-    public void clearSession(){
+    public void clearSession() {
         unsetUsername();
         unsetID();
         unsetUserID();

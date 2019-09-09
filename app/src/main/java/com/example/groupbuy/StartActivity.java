@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
 
@@ -48,7 +50,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void openMainActivityIfActiveSessionExists() {
-        HttpRequest httpRequest = new HttpRequest(this);
+        HttpRequestDebug httpRequest = new HttpRequestDebug(this);
         httpRequest.openMainActivityIfActiveSessionExists();
     }
 }

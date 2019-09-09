@@ -15,7 +15,6 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
     private final Product[] products;
 
 
-
     public ProductListAdapter(Activity context, Product[] products) {
         super(context, R.layout.product_row, products);
 

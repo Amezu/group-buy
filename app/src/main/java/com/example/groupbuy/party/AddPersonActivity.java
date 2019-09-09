@@ -1,8 +1,5 @@
 package com.example.groupbuy.party;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +9,9 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.HttpRequestDebug;
@@ -66,10 +66,12 @@ public class AddPersonActivity extends AppCompatActivity {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         });
     }
 
@@ -79,7 +81,7 @@ public class AddPersonActivity extends AppCompatActivity {
         finish();
     }
 
-    private Map createHashMap(String login){
+    private Map createHashMap(String login) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("login", login);
         return data;
