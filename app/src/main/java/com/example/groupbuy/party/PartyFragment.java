@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -20,24 +19,6 @@ import com.example.groupbuy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class PartyFragment extends Fragment {
-
-    class Product {
-        String name;
-        boolean bought = false;
-
-        Product(String name) {
-            this.name = name;
-        }
-
-        void changeStatus() {
-            bought = !bought;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
 
     public PartyFragment() {
     }
@@ -67,12 +48,12 @@ public class PartyFragment extends Fragment {
     }
 
     private void loadProductsPart() {
-        String[] title = {"soki - 2l", "wódka - 3l", "chipsy - 2 paczki"};
-        String[] subtitle = {"(0 propozycji)", "(1 propozycja)", "Ola, cheetosy"};
-        Boolean[] bought = {false, false, true};
-        Boolean[] clickable = {true, true, false};
+        Product product1 = new Product("coca-cola 2l", "Mark", 2.21, false, true);
+        Product product2 = new Product("whisky 3l", "Louis", 5.79, false, true);
+        Product product3 = new Product("nachos", "Mina", 13.11, true, false);
+        Product[] products = {product1, product2, product3};
 
-        ListAdapter productListAdapter = new ProductListAdapter(getActivity(), title, subtitle, bought, clickable);
+        ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
         ListView productListView = getView().findViewById(R.id.list);
         productListView.setAdapter(productListAdapter);
@@ -81,7 +62,7 @@ public class PartyFragment extends Fragment {
                 (parent, view, position, id) -> {
                     Product product = (Product) parent.getItemAtPosition(position);
                     product.changeStatus();
-                    if (product.bought)
+                    if (product.isBought())
                         Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
                 }
         );
