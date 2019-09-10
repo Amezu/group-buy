@@ -37,7 +37,7 @@ public class HttpRequest {
 
     private void sendRequest(final Map data, final String sessionId, final String path, int method, final Callback callback) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        String url = "http://ec2-52-57-197-241.eu-central-1.compute.amazonaws.com:8080/";
+        String url = "http://ec2-3-121-223-191.eu-central-1.compute.amazonaws.com:8080/";
         JsonObjectRequest JSONObj = new JsonObjectRequest(method, url + path, new JSONObject(data),
                 new Response.Listener<JSONObject>() {
                     @Override
