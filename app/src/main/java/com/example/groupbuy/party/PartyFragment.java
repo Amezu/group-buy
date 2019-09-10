@@ -62,7 +62,6 @@ public class PartyFragment extends Fragment {
         productListView.setAdapter(productListAdapter);
 
 //        TODO: Use RecyclerView to animate removing etc.
-//        TODO: Support of buying items
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
         fab.setOnClickListener(view -> openAddProductActivity());

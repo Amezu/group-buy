@@ -66,4 +66,9 @@ class Product {
         liked = !liked;
         thumbsUpCount += liked ? 1 : -1;
     }
+
+    public void changeBought() {
+//        TODO: Send request
+        bought = !bought;
+    }
 }
