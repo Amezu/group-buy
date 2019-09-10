@@ -5,13 +5,23 @@ class Product {
     private String user;
     private double price;
     private boolean bought = false;
+    private int thumbsUpCount = 0;
+    private boolean liked = false;
     private boolean mine = false;
 
-    public Product(String name, String user, double price, boolean bought, boolean mine) {
+    public Product(String name, String user, double price) {
         this.name = name;
         this.user = user;
         this.price = price;
+    }
+
+    public Product(String name, String user, double price, boolean bought, int thumbsUpCount, boolean liked, boolean mine) {
+        this.name = name;
+        this.user = user;
+        this.price = price;
+        this.thumbsUpCount = thumbsUpCount;
         this.bought = bought;
+        this.liked = liked;
         this.mine = mine;
     }
 
@@ -25,6 +35,14 @@ class Product {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getThumbsUpCount() {
+        return thumbsUpCount;
+    }
+
+    public boolean isLiked() {
+        return liked;
     }
 
     public boolean isBought() {
