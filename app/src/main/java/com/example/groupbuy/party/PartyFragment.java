@@ -53,18 +53,9 @@ public class PartyFragment extends Fragment {
     private void loadProductsPart() {
         List<Product> products = new ArrayList<>();
         products.add(new Product("nachos", "Mina", 13.11, true, 1, true));
-        products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 5, true));
-        products.add(new Product("whisky 3l", "Louis", 5.79, false, 2, false));
-        products.add(new Product("whisky 3l", "Olivia", 2.8, false, 5, true));
-
-        Comparator<Product> comparator = (p1, p2) ->
-                Boolean.compare(p2.isMine(), p1.isMine());
-        comparator = comparator.thenComparing((p1, p2) ->
-                Boolean.compare(p1.isBought(), p2.isBought()));
-        comparator = comparator.thenComparing((p1, p2) ->
-                Integer.compare(p2.getThumbsUpCount(), p1.getThumbsUpCount()));
-
-        products.sort(comparator);
+        products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 3, true));
+        products.add(new Product("whisky 3l", "Louis", 5.79, false, 3, false));
+        products.add(new Product("whisky 3l", "Olivia", 2.8, false, 4, true));
 
         ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 

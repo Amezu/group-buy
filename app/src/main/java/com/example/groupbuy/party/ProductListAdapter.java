@@ -20,12 +20,19 @@ import java.util.List;
 public class ProductListAdapter extends ArrayAdapter<Product> {
     private final Activity context;
     private final List<Product> products;
+    private Comparator<Product> comparator;
 
     public ProductListAdapter(Activity context, List<Product> products) {
         super(context, R.layout.product_row, products);
 
         this.context = context;
         this.products = products;
+
+        comparator = (p1, p2) -> Boolean.compare(p2.isMine(), p1.isMine());
+        comparator = comparator.thenComparing((p1, p2) -> Boolean.compare(p1.isBought(), p2.isBought()));
+        comparator = comparator.thenComparing((p1, p2) -> Integer.compare(p2.getThumbsUpCount(), p1.getThumbsUpCount()));
+
+        products.sort(comparator);
     }
 
     public View getView(int position, View view, ViewGroup parent) {
