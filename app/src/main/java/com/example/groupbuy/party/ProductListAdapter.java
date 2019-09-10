@@ -35,26 +35,31 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         TextView titleText = rowView.findViewById(R.id.title);
         TextView subtitleText = rowView.findViewById(R.id.subtitle);
         CheckBox checkbox = rowView.findViewById(R.id.checkbox);
-        ImageView thumbUp = rowView.findViewById(R.id.thumbUp);
         TextView thumbsUpCount = rowView.findViewById(R.id.thumbsUpCount);
-
-        final int disabledLike = Color.LTGRAY;
-        final int notLiked = Color.GRAY;
-        final int liked = context.getColor(R.color.colorAccent);
 
         Product product = products.get(position);
         String title = String.format("%s (%.2f\u200E$)", product.getName(), product.getPrice());
-        Drawable like = thumbUp.getDrawable().mutate();
-        int likeColor = isLikeDisabled(product) ? disabledLike : product.isLiked() ? liked : notLiked;
 
         titleText.setText(title);
         subtitleText.setText(product.getUser());
         checkbox.setChecked(product.isBought());
         checkbox.setEnabled(product.isMine());
-        DrawableCompat.setTint(DrawableCompat.wrap(like), likeColor);
+        changeThumbUpColor(rowView, product);
         thumbsUpCount.setText(String.valueOf(product.getThumbsUpCount()));
 
         return rowView;
+    }
+
+    private void changeThumbUpColor(View rowView, Product product) {
+        final int disabledColor = Color.LTGRAY;
+        final int notLikedColor = Color.GRAY;
+        final int likedColor = context.getColor(R.color.colorAccent);
+
+        ImageView view = rowView.findViewById(R.id.thumbUp);
+        Drawable drawable = view.getDrawable().mutate();
+        int color = isLikeDisabled(product) ? disabledColor : product.isLiked() ? likedColor : notLikedColor;
+
+        DrawableCompat.setTint(DrawableCompat.wrap(drawable), color);
     }
 
     private boolean isLikeDisabled(Product product) {
