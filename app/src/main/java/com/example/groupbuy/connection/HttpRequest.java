@@ -23,6 +23,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.widget.Toast.*;
+
 public class HttpRequest {
 
     private Context context;
@@ -104,7 +106,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                Toast.makeText(context, "Connection error", Toast.LENGTH_SHORT).show();
+                makeText(context, "Connection error", LENGTH_SHORT).show();
             }
         });
     }
@@ -136,7 +138,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                Toast.makeText(context, "Logout failed", Toast.LENGTH_SHORT).show();
+                makeText(context, "Logout failed", LENGTH_SHORT).show();
                 Intent intent = new Intent(context, StartActivity.class);
                 context.startActivity(intent);
                 session.clearSession();
@@ -164,7 +166,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                //TODO wypisz błąd na ekran
+                makeText(context, "Operation failed", LENGTH_SHORT).show();
             }
         });
     }
@@ -181,7 +183,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                //TODO wypisz błąd na ekran
+                makeText(context, "Operation failed", LENGTH_SHORT).show();
             }
         });
     }
@@ -198,7 +200,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                //TODO wypisz błąd na ekran
+                makeText(context, "Operation failed", LENGTH_SHORT).show();
             }
         });
     }
@@ -214,7 +216,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                //TODO wypisz błąd na ekran
+                makeText(context, "Operation failed", LENGTH_SHORT).show();
             }
         });
     }
@@ -236,7 +238,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                //TODO wypisz błąd na ekran
+                makeText(context, "Operation failed", LENGTH_SHORT).show();
             }
         });
     }
@@ -253,7 +255,7 @@ public class HttpRequest {
 
             @Override
             public void error() {
-                //TODO wypisz błąd na ekran
+                makeText(context, "Operation failed", LENGTH_SHORT).show();
             }
         });
     }
