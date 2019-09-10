@@ -49,9 +49,10 @@ public class PartyFragment extends Fragment {
 
     private void loadProductsPart() {
         Product product1 = new Product("coca-cola 2l", "Mark", 2.21, false, 5, true, true);
-        Product product2 = new Product("whisky 3l", "Louis", 5.79, false, 2, false, true);
+        Product product2 = new Product("whisky 3l", "Louis", 5.79, false, 2, false, false);
         Product product3 = new Product("nachos", "Mina", 13.11, true, 1, true, false);
-        Product[] products = {product1, product2, product3};
+        Product product4 = new Product("whisky 3l", "Olivia", 2.8, false, 5, true, false);
+        Product[] products = {product1, product2, product3, product4};
 
         ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
