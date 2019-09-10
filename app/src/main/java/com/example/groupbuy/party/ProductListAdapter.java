@@ -1,19 +1,25 @@
 package com.example.groupbuy.party;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.graphics.drawable.DrawableWrapper;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.groupbuy.R;
 
 public class ProductListAdapter extends ArrayAdapter<Product> {
     private final Activity context;
     private final Product[] products;
-
 
     public ProductListAdapter(Activity context, Product[] products) {
         super(context, R.layout.product_row, products);
@@ -28,15 +34,21 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
         TextView titleText = rowView.findViewById(R.id.title);
         TextView subtitleText = rowView.findViewById(R.id.subtitle);
-        CheckBox checkBox = rowView.findViewById(R.id.checkbox);
+        CheckBox checkbox = rowView.findViewById(R.id.checkbox);
+        ImageView thumbUp = rowView.findViewById(R.id.thumbUp);
+        TextView thumbsUpCount = rowView.findViewById(R.id.thumbsUpCount);
 
         Product product = products[position];
         String title = String.format("%s (%.2f\u200E$)", product.getName(), product.getPrice());
+        Drawable like = thumbUp.getDrawable();
+        like.mutate();
 
         titleText.setText(title);
         subtitleText.setText(product.getUser());
-        checkBox.setChecked(product.isBought());
-        checkBox.setEnabled(product.isMine());
+        checkbox.setChecked(product.isBought());
+        checkbox.setEnabled(product.isMine());
+        DrawableCompat.setTint(DrawableCompat.wrap(like), product.isLiked() ? context.getColor(R.color.colorAccent) : Color.GRAY);
+        thumbsUpCount.setText(String.valueOf(product.getThumbsUpCount()));
 
         return rowView;
     }
