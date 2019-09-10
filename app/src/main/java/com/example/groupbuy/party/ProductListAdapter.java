@@ -15,6 +15,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.groupbuy.R;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ProductListAdapter extends ArrayAdapter<Product> {
@@ -43,6 +44,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         TextView subtitleText = rowView.findViewById(R.id.subtitle);
         CheckBox checkbox = rowView.findViewById(R.id.checkbox);
         TextView thumbsUpCount = rowView.findViewById(R.id.thumbsUpCount);
+        ImageView thumbUpImage = rowView.findViewById(R.id.thumbUp);
 
         Product product = products.get(position);
         String title = String.format("%s (%.2f\u200E$)", product.getName(), product.getPrice());
@@ -51,25 +53,36 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         subtitleText.setText(product.getUser());
         checkbox.setChecked(product.isBought());
         checkbox.setEnabled(product.isMine());
-        changeThumbUpColor(rowView, product);
+        changeThumbUpColor(thumbUpImage, product);
         thumbsUpCount.setText(String.valueOf(product.getThumbsUpCount()));
+
+        thumbUpImage.setOnClickListener(v -> {
+            if (!isThumbUpDisabled(product))
+                product.changeLiked();
+
+            notifyDataSetChanged();
+        });
 
         return rowView;
     }
 
-    private void changeThumbUpColor(View rowView, Product product) {
+    private void changeThumbUpColor(ImageView view, Product product) {
         final int disabledColor = Color.LTGRAY;
         final int notLikedColor = Color.GRAY;
         final int likedColor = context.getColor(R.color.colorAccent);
-
-        ImageView view = rowView.findViewById(R.id.thumbUp);
         Drawable drawable = view.getDrawable().mutate();
-        int color = isLikeDisabled(product) ? disabledColor : product.isLiked() ? likedColor : notLikedColor;
+        int color = isThumbUpDisabled(product) ? disabledColor : product.isLiked() ? likedColor : notLikedColor;
 
         DrawableCompat.setTint(DrawableCompat.wrap(drawable), color);
     }
 
-    private boolean isLikeDisabled(Product product) {
+    private boolean isThumbUpDisabled(Product product) {
         return product.isBought() || product.isMine();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        products.sort(comparator);
+        super.notifyDataSetChanged();
     }
 }

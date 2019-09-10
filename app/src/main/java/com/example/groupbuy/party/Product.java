@@ -60,4 +60,10 @@ class Product {
     public String toString() {
         return name;
     }
+
+    public void changeLiked() {
+//        TODO: Send request
+        liked = !liked;
+        thumbsUpCount += liked ? 1 : -1;
+    }
 }
