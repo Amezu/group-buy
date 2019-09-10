@@ -11,8 +11,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.graphics.drawable.DrawableWrapper;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.groupbuy.R;
@@ -38,18 +36,26 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         ImageView thumbUp = rowView.findViewById(R.id.thumbUp);
         TextView thumbsUpCount = rowView.findViewById(R.id.thumbsUpCount);
 
+        final int disabledLike = Color.LTGRAY;
+        final int notLiked = Color.GRAY;
+        final int liked = context.getColor(R.color.colorAccent);
+
         Product product = products[position];
         String title = String.format("%s (%.2f\u200E$)", product.getName(), product.getPrice());
-        Drawable like = thumbUp.getDrawable();
-        like.mutate();
+        Drawable like = thumbUp.getDrawable().mutate();
+        int likeColor = isLikeDisabled(product) ? disabledLike : product.isLiked() ? liked : notLiked;
 
         titleText.setText(title);
         subtitleText.setText(product.getUser());
         checkbox.setChecked(product.isBought());
         checkbox.setEnabled(product.isMine());
-        DrawableCompat.setTint(DrawableCompat.wrap(like), product.isLiked() ? context.getColor(R.color.colorAccent) : Color.GRAY);
+        DrawableCompat.setTint(DrawableCompat.wrap(like), likeColor);
         thumbsUpCount.setText(String.valueOf(product.getThumbsUpCount()));
 
         return rowView;
+    }
+
+    private boolean isLikeDisabled(Product product) {
+        return product.isBought() || product.isMine();
     }
 }
