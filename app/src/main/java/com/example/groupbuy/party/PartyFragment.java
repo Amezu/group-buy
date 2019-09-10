@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -52,10 +51,18 @@ public class PartyFragment extends Fragment {
 
     private void loadProductsPart() {
         List<Product> products = new ArrayList<>();
+        products.add(new Product("nachos", "Mina", 13.11, true, 1, true));
         products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 5, true));
         products.add(new Product("whisky 3l", "Louis", 5.79, false, 2, false));
-        products.add(new Product("nachos", "Mina", 13.11, true, 1, true));
         products.add(new Product("whisky 3l", "Olivia", 2.8, false, 5, true));
+
+        products.sort((Product p1, Product p2) -> {
+            int mineCmp = Boolean.compare(p2.isMine(), p1.isMine());
+            if (mineCmp != 0) return mineCmp;
+            int boughtCmp = Boolean.compare(p1.isBought(), p2.isBought());
+            if (boughtCmp != 0) return boughtCmp;
+            return Integer.compare(p2.getThumbsUpCount(), p1.getThumbsUpCount());
+        });
 
         ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
