@@ -15,11 +15,13 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.groupbuy.R;
 
+import java.util.List;
+
 public class ProductListAdapter extends ArrayAdapter<Product> {
     private final Activity context;
-    private final Product[] products;
+    private final List<Product> products;
 
-    public ProductListAdapter(Activity context, Product[] products) {
+    public ProductListAdapter(Activity context, List<Product> products) {
         super(context, R.layout.product_row, products);
 
         this.context = context;
@@ -40,7 +42,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
         final int notLiked = Color.GRAY;
         final int liked = context.getColor(R.color.colorAccent);
 
-        Product product = products[position];
+        Product product = products.get(position);
         String title = String.format("%s (%.2f\u200E$)", product.getName(), product.getPrice());
         Drawable like = thumbUp.getDrawable().mutate();
         int likeColor = isLikeDisabled(product) ? disabledLike : product.isLiked() ? liked : notLiked;

@@ -18,6 +18,9 @@ import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PartyFragment extends Fragment {
 
     public PartyFragment() {
@@ -48,11 +51,12 @@ public class PartyFragment extends Fragment {
     }
 
     private void loadProductsPart() {
-        Product product1 = new Product("coca-cola 2l", "Mark", 2.21, false, 5, true, true);
-        Product product2 = new Product("whisky 3l", "Louis", 5.79, false, 2, false, false);
-        Product product3 = new Product("nachos", "Mina", 13.11, true, 1, true, false);
-        Product product4 = new Product("whisky 3l", "Olivia", 2.8, false, 5, true, false);
-        Product[] products = {product1, product2, product3, product4};
+        List<Product> products = new ArrayList<>();
+        products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 5, true, true));
+        products.add(new Product("whisky 3l", "Louis", 5.79, false, 2, false, false));
+        products.add(new Product("nachos", "Mina", 13.11, true, 1, true, false));
+        products.add(new Product("whisky 3l", "Olivia", 2.8, false, 5, true, false));
+//        Product[] products = {product1, product2, product3, product4};
 
         ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
@@ -63,14 +67,14 @@ public class PartyFragment extends Fragment {
 //        TODO: Support of buying items
 //        TODO: Sort products from bought to not bought
 
-        productListView.setOnItemClickListener(
-                (parent, view, position, id) -> {
-                    Product product = (Product) parent.getItemAtPosition(position);
-                    product.changeStatus();
-                    if (product.isBought())
-                        Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
-                }
-        );
+//        productListView.setOnItemClickListener(
+//                (parent, view, position, id) -> {
+//                    products.add((Product) parent.getItemAtPosition(position);
+//                    product.changeStatus();
+//                    if (product.isBought())
+//                        Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
+//                }
+//        );
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
         fab.setOnClickListener(view -> openAddProductActivity());
