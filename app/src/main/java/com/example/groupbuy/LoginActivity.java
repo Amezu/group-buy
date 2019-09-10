@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button btnLogin = (Button) findViewById(R.id.btnLogin);
+        Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,8 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private Map getData() {
-        EditText etLogin = (EditText) findViewById(R.id.etLogin);
-        EditText etPassword = (EditText) findViewById(R.id.etPassword);
+        EditText etLogin = findViewById(R.id.etLogin);
+        EditText etPassword = findViewById(R.id.etPassword);
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("username", etLogin.getText().toString());
         data.put("password", etPassword.getText().toString());
