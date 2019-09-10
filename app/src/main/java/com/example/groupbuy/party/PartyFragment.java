@@ -18,7 +18,6 @@ import com.example.groupbuy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class PartyFragment extends Fragment {
@@ -62,7 +61,7 @@ public class PartyFragment extends Fragment {
         ListView productListView = getView().findViewById(R.id.list);
         productListView.setAdapter(productListAdapter);
 
-//        TODO: Support of thumbs up button
+//        TODO: Use RecyclerView to animate removing etc.
 //        TODO: Support of buying items
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
