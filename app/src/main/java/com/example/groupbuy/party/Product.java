@@ -7,7 +7,6 @@ class Product {
     private boolean bought = false;
     private int thumbsUpCount = 0;
     private boolean liked = false;
-    private boolean mine = false;
 
     public Product(String name, String user, double price) {
         this.name = name;
@@ -15,14 +14,13 @@ class Product {
         this.price = price;
     }
 
-    public Product(String name, String user, double price, boolean bought, int thumbsUpCount, boolean liked, boolean mine) {
+    public Product(String name, String user, double price, boolean bought, int thumbsUpCount, boolean liked) {
         this.name = name;
         this.user = user;
         this.price = price;
         this.thumbsUpCount = thumbsUpCount;
         this.bought = bought;
         this.liked = liked;
-        this.mine = mine;
     }
 
     public String getName() {
@@ -50,7 +48,8 @@ class Product {
     }
 
     public boolean isMine() {
-        return mine;
+//        TODO: Replace mock
+        return user.equals("Mark");
     }
 
     void changeStatus() {

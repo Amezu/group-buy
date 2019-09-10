@@ -52,11 +52,10 @@ public class PartyFragment extends Fragment {
 
     private void loadProductsPart() {
         List<Product> products = new ArrayList<>();
-        products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 5, true, true));
-        products.add(new Product("whisky 3l", "Louis", 5.79, false, 2, false, false));
-        products.add(new Product("nachos", "Mina", 13.11, true, 1, true, false));
-        products.add(new Product("whisky 3l", "Olivia", 2.8, false, 5, true, false));
-//        Product[] products = {product1, product2, product3, product4};
+        products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 5, true));
+        products.add(new Product("whisky 3l", "Louis", 5.79, false, 2, false));
+        products.add(new Product("nachos", "Mina", 13.11, true, 1, true));
+        products.add(new Product("whisky 3l", "Olivia", 2.8, false, 5, true));
 
         ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
@@ -66,15 +65,6 @@ public class PartyFragment extends Fragment {
 //        TODO: Support of thumbs up button
 //        TODO: Support of buying items
 //        TODO: Sort products from bought to not bought
-
-//        productListView.setOnItemClickListener(
-//                (parent, view, position, id) -> {
-//                    products.add((Product) parent.getItemAtPosition(position);
-//                    product.changeStatus();
-//                    if (product.isBought())
-//                        Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
-//                }
-//        );
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
         fab.setOnClickListener(view -> openAddProductActivity());
