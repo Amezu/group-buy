@@ -18,6 +18,7 @@ import com.example.groupbuy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PartyFragment extends Fragment {
@@ -56,13 +57,14 @@ public class PartyFragment extends Fragment {
         products.add(new Product("whisky 3l", "Louis", 5.79, false, 2, false));
         products.add(new Product("whisky 3l", "Olivia", 2.8, false, 5, true));
 
-        products.sort((Product p1, Product p2) -> {
-            int mineCmp = Boolean.compare(p2.isMine(), p1.isMine());
-            if (mineCmp != 0) return mineCmp;
-            int boughtCmp = Boolean.compare(p1.isBought(), p2.isBought());
-            if (boughtCmp != 0) return boughtCmp;
-            return Integer.compare(p2.getThumbsUpCount(), p1.getThumbsUpCount());
-        });
+        Comparator<Product> comparator = (p1, p2) ->
+                Boolean.compare(p2.isMine(), p1.isMine());
+        comparator = comparator.thenComparing((p1, p2) ->
+                Boolean.compare(p1.isBought(), p2.isBought()));
+        comparator = comparator.thenComparing((p1, p2) ->
+                Integer.compare(p2.getThumbsUpCount(), p1.getThumbsUpCount()));
+
+        products.sort(comparator);
 
         ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
@@ -71,7 +73,6 @@ public class PartyFragment extends Fragment {
 
 //        TODO: Support of thumbs up button
 //        TODO: Support of buying items
-//        TODO: Sort products from bought to not bought
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
         fab.setOnClickListener(view -> openAddProductActivity());
