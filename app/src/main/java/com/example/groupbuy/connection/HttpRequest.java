@@ -259,4 +259,8 @@ public class HttpRequest {
             }
         });
     }
+    public void loadProductList(String groupId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "groups/" + groupId + "/product", Request.Method.GET, callback);
+    }
 }

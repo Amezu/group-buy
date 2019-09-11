@@ -1,6 +1,6 @@
 package com.example.groupbuy.party;
 
-class Product {
+public class Product {
     private String name;
     private String user;
     private double price;

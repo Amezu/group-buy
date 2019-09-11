@@ -50,7 +50,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void openMainActivityIfActiveSessionExists() {
-        HttpRequestDebug httpRequest = new HttpRequestDebug(this);
+        HttpRequest httpRequest = new HttpRequest(this);
         httpRequest.openMainActivityIfActiveSessionExists();
     }
 }

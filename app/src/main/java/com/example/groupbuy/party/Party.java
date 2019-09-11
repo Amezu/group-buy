@@ -1,8 +1,10 @@
 package com.example.groupbuy.party;
 
-import androidx.annotation.NonNull;
 
-public class Party {
+import androidx.annotation.NonNull;
+import java.io.Serializable;
+
+public class Party implements Serializable{
     public String partyName;
     public String owner;
     public String id;
@@ -19,4 +21,5 @@ public class Party {
     public String toString() {
         return partyName;
     }
+
 }

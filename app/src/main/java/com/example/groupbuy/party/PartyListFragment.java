@@ -31,7 +31,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class PartyListFragment extends Fragment {
-    List<Party> partyList;
+    private List<Party> partyList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,8 +102,8 @@ public class PartyListFragment extends Fragment {
         partiesView.setAdapter(partiesAdapter);
         registerForContextMenu(partiesView);
         partiesView.setOnItemClickListener((parent, view, position, id) -> {
-            String group = String.valueOf(parent.getItemAtPosition(position));
-            openPartyFragment(group);
+            Party party = partyList.get(position);
+            openPartyFragment(party);
         });
     }
 
@@ -112,9 +112,9 @@ public class PartyListFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void openPartyFragment(String group) {
+    private void openPartyFragment(Party party) {
         MainActivity activity = (MainActivity) getActivity();
-        activity.openPartyFragment(group);
+        activity.openPartyFragment(party);
     }
 
     @Override

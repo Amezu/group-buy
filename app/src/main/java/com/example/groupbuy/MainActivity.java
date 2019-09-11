@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.friends.FriendListFragment;
+import com.example.groupbuy.party.Party;
 import com.example.groupbuy.party.PartyFragment;
 import com.example.groupbuy.party.PartyListFragment;
 import com.example.groupbuy.party.PeopleFragment;
@@ -88,19 +89,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    public void openPartyFragment(String party) {
+    public void openPartyFragment(Party party) {
         loadFragment(PartyFragment.newInstance(party));
-
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(party);
+        actionBar.setTitle(party.partyName);
         actionBar.show();
     }
 
-    public void openPeopleFragment(String party) {
+    public void openPeopleFragment(Party party) {
         loadFragment(PeopleFragment.newInstance(party));
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(party);
+        actionBar.setTitle(party.partyName);
         actionBar.show();
     }
 }

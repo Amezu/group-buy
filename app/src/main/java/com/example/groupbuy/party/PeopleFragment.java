@@ -19,11 +19,11 @@ public class PeopleFragment extends Fragment {
     public PeopleFragment() {
     }
 
-    public static PeopleFragment newInstance(String partyName) {
+    public static PeopleFragment newInstance(Party party) {
         PeopleFragment peopleFragment = new PeopleFragment();
 
         Bundle args = new Bundle();
-        args.putString("partyName", partyName);
+        args.putSerializable("party", party);
         peopleFragment.setArguments(args);
 
         return peopleFragment;
@@ -54,7 +54,7 @@ public class PeopleFragment extends Fragment {
 
     private void openAddPersonActivity() {
         Intent intent = new Intent(getActivity(), AddPersonActivity.class);
-        intent.putExtra("partyName", getArguments().getString("partyName", ""));
+        intent.putExtra("partyName", getArguments().getSerializable("party"));
         startActivity(intent);
     }
 }

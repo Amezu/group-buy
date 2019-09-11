@@ -6,30 +6,39 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
+import com.example.groupbuy.connection.Callback;
+import com.example.groupbuy.connection.HttpRequest;
+import com.example.groupbuy.connection.JsonParser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PartyFragment extends Fragment {
 
+    private List<Product> products;
     public PartyFragment() {
     }
 
-    public static PartyFragment newInstance(String partyName) {
+    public static PartyFragment newInstance(Party party) {
         PartyFragment partyFragment = new PartyFragment();
 
         Bundle args = new Bundle();
-        args.putString("partyName", partyName);
+        args.putSerializable("party", party);
         partyFragment.setArguments(args);
 
         return partyFragment;
@@ -50,21 +59,28 @@ public class PartyFragment extends Fragment {
     }
 
     private void loadProductsPart() {
-        List<Product> products = new ArrayList<>();
-        products.add(new Product("nachos", "Mina", 13.11, true, 1, true));
-        products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 3, true));
-        products.add(new Product("whisky 3l", "Louis", 5.79, false, 3, false));
-        products.add(new Product("whisky 3l", "Olivia", 2.8, false, 4, true));
 
-        ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
+        Party party = (Party) getArguments().getSerializable("party");
+        new HttpRequest(getActivity()).loadProductList(party.id , new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                loadProductList(response);
+                ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
-        ListView productListView = getView().findViewById(R.id.list);
-        productListView.setAdapter(productListAdapter);
+                ListView productListView = getView().findViewById(R.id.list);
+                productListView.setAdapter(productListAdapter);
 
 //        TODO: Use RecyclerView to animate removing etc.
 
-        FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(view -> openAddProductActivity());
+                FloatingActionButton fab = getView().findViewById(R.id.fab);
+                fab.setOnClickListener(view -> openAddProductActivity());
+            }
+        });
+
+    }
+
+    private void loadProductList(JSONObject jsonObject) {
+        products = JsonParser.parseProductList(jsonObject);
     }
 
     private void loadPeoplePart() {
@@ -100,18 +116,19 @@ public class PartyFragment extends Fragment {
 
     private void openAddProductActivity() {
         Intent intent = new Intent(getActivity(), AddProductActivity.class);
-        intent.putExtra("partyName", getArguments().getString("partyName", ""));
+        intent.putExtra("partyName", getArguments().getSerializable("party"));
         startActivity(intent);
     }
 
     private void openInvitePersonActivity() {
         Intent intent = new Intent(getActivity(), AddPersonActivity.class);
-        intent.putExtra("partyName", getArguments().getString("partyName", ""));
+        intent.putExtra("partyName", getArguments().getSerializable("party"));
         startActivity(intent);
     }
 
     private void openInvitedPeopleFragment() {
         MainActivity activity = (MainActivity) getActivity();
-        activity.openPeopleFragment(getArguments().getString("partyName", ""));
+        Party party = (Party) getArguments().getSerializable("party");
+        activity.openPeopleFragment((Party) getArguments().getSerializable("party"));
     }
 }
