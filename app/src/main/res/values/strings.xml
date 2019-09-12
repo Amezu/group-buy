@@ -26,4 +26,6 @@
     <string name="add_person_name">Start typing name…</string>
     <string name="product_price">Price</string>
     <string name="product_edit">Change</string>
+    <string name="add_group_create">Create</string>
+    <string name="add_group_name">Name</string>
 </resources>

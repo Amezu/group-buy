@@ -1,5 +1,6 @@
 package com.example.groupbuy.groups;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -91,8 +92,8 @@ public class GroupListFragment extends Fragment {
     }
 
     private void openAddGroupActivity() {
-//        Intent intent = new Intent(getActivity(), AddGroupActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(getActivity(), AddGroupActivity.class);
+        startActivity(intent);
     }
 
     private void openGroupFragment(String group) {
