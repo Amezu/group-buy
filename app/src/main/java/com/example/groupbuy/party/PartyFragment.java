@@ -1,26 +1,35 @@
 package com.example.groupbuy.party;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
+import com.example.groupbuy.connection.HttpRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PartyFragment extends Fragment {
+
+    private List<Product> products;
 
     public PartyFragment() {
     }
@@ -50,21 +59,67 @@ public class PartyFragment extends Fragment {
     }
 
     private void loadProductsPart() {
-        List<Product> products = new ArrayList<>();
+        products = new ArrayList<>();
         products.add(new Product("nachos", "Mina", 13.11, true, 1, true));
         products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 3, true));
         products.add(new Product("whisky 3l", "Louis", 5.79, false, 3, false));
         products.add(new Product("whisky 3l", "Olivia", 2.8, false, 4, true));
 
-        ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
+        ListAdapter productsAdapter = new ProductListAdapter(getActivity(), products);
 
-        ListView productListView = getView().findViewById(R.id.list);
-        productListView.setAdapter(productListAdapter);
+        ListView productsView = getView().findViewById(R.id.list);
+        productsView.setAdapter(productsAdapter);
+
+        registerForContextMenu(productsView);
 
 //        TODO: Use RecyclerView to animate removing etc.
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
         fab.setOnClickListener(view -> openAddProductActivity());
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.list) {
+            ListView lv = (ListView) v;
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            String obj = lv.getItemAtPosition(acmi.position).toString();
+
+            menu.setHeaderTitle(obj);
+//            TODO: if(user is creator of item)
+            menu.add("Edit");
+//            TODO: if(user is creator of item or admin)
+            menu.add("Remove");
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        if (item.getTitle() == "Edit") {
+            openEditProductActivity();
+        } else if (item.getTitle() == "Remove") {
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+//                    TODO: Remove product from DB
+
+                    products.remove(info.position);
+                    ListAdapter productsAdapter = new ProductListAdapter(getActivity(), products);
+                    ListView productsView = getView().findViewById(R.id.list);
+                    productsView.setAdapter(productsAdapter);
+                }
+            };
+            AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
+            ab.setMessage("Are you sure to delete?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
+        } else return false;
+
+        return true;
+    }
+
+    private void openEditProductActivity() {
+
     }
 
     private void loadPeoplePart() {
