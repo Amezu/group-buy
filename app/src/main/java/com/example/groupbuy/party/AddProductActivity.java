@@ -34,7 +34,8 @@ public class AddProductActivity extends AppCompatActivity {
         TextView priceView = findViewById(R.id.priceEdit);
 
         String name = nameView.getText().toString();
-        Double price = Double.valueOf(priceView.getText().toString());
+        String priceString = priceView.getText().toString();
+        Double price = priceString.isEmpty() ? null : Double.valueOf(priceString);
 
         Toast.makeText(this, name + " " + price, Toast.LENGTH_SHORT).show();
 
