@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.friends.FriendListFragment;
+import com.example.groupbuy.groups.GroupFragment;
 import com.example.groupbuy.groups.GroupListFragment;
 import com.example.groupbuy.party.PartyFragment;
 import com.example.groupbuy.party.PartyListFragment;
@@ -106,10 +107,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void openGroupFragment(String group) {
-//        loadFragment(GroupFragment.newInstance(party));
-//
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setTitle(group);
-//        actionBar.show();
+        loadFragment(GroupFragment.newInstance(group));
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(group);
+        actionBar.show();
     }
 }
