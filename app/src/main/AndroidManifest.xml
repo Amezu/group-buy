@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".party.EditProductActivity"></activity>
         <activity android:name=".friends.AddFriendActivity" />
         <activity android:name=".party.AddPersonActivity" />
         <activity android:name=".MainActivity" />

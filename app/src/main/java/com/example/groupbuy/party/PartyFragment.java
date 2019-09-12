@@ -98,7 +98,7 @@ public class PartyFragment extends Fragment {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         if (item.getTitle() == "Edit") {
-            openEditProductActivity();
+            openEditProductActivity(products.get(info.position));
         } else if (item.getTitle() == "Remove") {
             DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
                 if (which == DialogInterface.BUTTON_POSITIVE) {
@@ -116,10 +116,6 @@ public class PartyFragment extends Fragment {
         } else return false;
 
         return true;
-    }
-
-    private void openEditProductActivity() {
-
     }
 
     private void loadPeoplePart() {
@@ -156,6 +152,14 @@ public class PartyFragment extends Fragment {
     private void openAddProductActivity() {
         Intent intent = new Intent(getActivity(), AddProductActivity.class);
         intent.putExtra("partyName", getArguments().getString("partyName", ""));
+        startActivity(intent);
+    }
+
+    private void openEditProductActivity(Product product) {
+        Intent intent = new Intent(getActivity(), EditProductActivity.class);
+        intent.putExtra("partyName", getArguments().getString("partyName", ""));
+        intent.putExtra("productName", product.getName());
+        intent.putExtra("productPrice", product.getPrice());
         startActivity(intent);
     }
 

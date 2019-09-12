@@ -25,4 +25,5 @@
     <string name="friends">Friends</string>
     <string name="add_person_name">Start typing name…</string>
     <string name="product_price">Price</string>
+    <string name="product_edit">Change</string>
 </resources>
