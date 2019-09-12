@@ -2,6 +2,7 @@ package com.example.groupbuy.connection;
 
 import android.util.Log;
 
+import com.example.groupbuy.friends.User;
 import com.example.groupbuy.party.Party;
 import com.example.groupbuy.party.Product;
 
@@ -34,11 +35,47 @@ public class JsonParser {
             JSONArray array = jsonObject.getJSONArray("products");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
-                products.add(new Product(object.getString("productName"), object.getString("userName"), object.getDouble("price"), object.getBoolean("bought"), object.getInt("numVotes") , object.getBoolean("hasCurrentUserVoted")));
+                products.add(new Product(object.getString("productId"),
+                        object.getString("productName"),
+                        object.getString("userName"),
+                        object.getDouble("price"),
+                        object.getString("productImage"),
+                        object.getString("description"),
+                        object.getBoolean("bought"),
+                        object.getInt("numVotes"),
+                        object.getBoolean("hasCurrentUserVoted")));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         return products;
     }
+    public static List<User> parsePeopleList(JSONObject s) {
+            List<User> users = new ArrayList<>();
+        try {
+            JSONArray array = s.getJSONArray("users");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                users.add(new User(object.getString("userId"), object.getString("username")));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
+
+    public static List<User> parseFriendList(JSONObject s) {
+        List<User> users = new ArrayList<>();
+        try {
+            JSONArray array = s.getJSONArray("friends");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                users.add(new User(object.getString("userId"), object.getString("username")));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
+
 }

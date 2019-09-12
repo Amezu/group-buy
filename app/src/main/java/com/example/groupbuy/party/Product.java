@@ -1,9 +1,14 @@
 package com.example.groupbuy.party;
 
+import com.example.groupbuy.connection.HttpRequest;
+
 public class Product {
+    private String id;
     private String name;
     private String user;
     private double price;
+    private String category;
+    private String description;
     private boolean bought = false;
     private int thumbsUpCount = 0;
     private boolean liked = false;
@@ -14,13 +19,21 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, String user, double price, boolean bought, int thumbsUpCount, boolean liked) {
+    public Product(String id, String name, String user, double price, String category, String description, boolean bought, int thumbsUpCount, boolean liked) {
+        this.id = id;
         this.name = name;
         this.user = user;
         this.price = price;
+        this.category = category;
+        this.description = description;
         this.thumbsUpCount = thumbsUpCount;
         this.bought = bought;
         this.liked = liked;
+
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -35,6 +48,10 @@ public class Product {
         return price;
     }
 
+    public Object getCategory() { return category;}
+
+    public Object getDescription() { return description;}
+
     public int getThumbsUpCount() {
         return thumbsUpCount;
     }
@@ -47,13 +64,20 @@ public class Product {
         return bought;
     }
 
-    public boolean isMine() {
-//        TODO: Replace mock
-        return user.equals("Mark");
+    public boolean isMine(String userName) {
+        return user.equals(userName);
     }
 
-    void changeStatus() {
-        bought = !bought;
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
+    }
+
+    public void setThumbsUpCount(int thumbsUpCount) {
+        this.thumbsUpCount = thumbsUpCount;
+    }
+
+    void changeStatus(boolean bought) {
+        this.bought = bought;
     }
 
     @Override
@@ -61,14 +85,4 @@ public class Product {
         return name;
     }
 
-    public void changeLiked() {
-//        TODO: Send request
-        liked = !liked;
-        thumbsUpCount += liked ? 1 : -1;
-    }
-
-    public void changeBought() {
-//        TODO: Send request
-        bought = !bought;
-    }
 }

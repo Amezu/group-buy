@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.StartActivity;
+import com.example.groupbuy.party.Product;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -262,5 +263,42 @@ public class HttpRequest {
     public void loadProductList(String groupId, Callback callback) {
         Session session = Session.getInstance(context);
         sendRequest(new HashMap(), session.getID(), "groups/" + groupId + "/product", Request.Method.GET, callback);
+    }
+
+    public void loadProduct(String productId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "products/" + productId, Request.Method.GET, callback);
+    }
+
+    public void voteForProduct(String id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "vote/" + id + "/product", Request.Method.POST, callback);
+    }
+
+    public void unvoteForProduct(String id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "vote/" + id + "/product", Request.Method.DELETE, callback);
+    }
+
+    public void getVotesForProduct(String id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "vote/" + id + "/product", Request.Method.GET, callback);
+    }
+
+    public void changeProductBoughtStatus(Product product, Callback callback) {
+        Session session = Session.getInstance(context);
+        Map body = new HashMap();
+        body.put("bought", !product.isBought());
+        sendRequest(body, session.getID(), "products/" + product.getId(), Request.Method.PUT, callback);
+    }
+
+    public void loadPeopleList(String groupId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "groups/" + groupId + "/user", Request.Method.GET, callback);
+    }
+
+    public void loadFriendList(String groupId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "friends/" + groupId + "/user", Request.Method.GET, callback);
     }
 }

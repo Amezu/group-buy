@@ -14,39 +14,77 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.groupbuy.R;
+import com.example.groupbuy.connection.Callback;
+import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
+import com.example.groupbuy.connection.JsonParser;
+import com.example.groupbuy.friends.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddPersonActivity extends AppCompatActivity {
-    String party;
-
+    Party party;
+    User[] peopleToAdd;
+    private List<User> friends = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
-
+        Intent intent = getIntent();
+        party = (Party) intent.getSerializableExtra("party");
         loadPeopleList("");
         addPersonWhenItemClicked();
         searchPersonByName();
-
-        Intent intent = getIntent();
-        party = intent.getStringExtra("partyName");
-
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(party);
+        actionBar.setTitle(party.toString());
         actionBar.setSubtitle("Invite guest");
         actionBar.show();
     }
 
     private void loadPeopleList(final String search) {
-        String[] allPeople = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
-        String[] people = Arrays.stream(allPeople).filter(name -> name.toLowerCase().contains(search.toLowerCase())).toArray(String[]::new);
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, people);
-        ListView view = findViewById(R.id.list);
-        view.setAdapter(adapter);
+        HttpRequest httpRequest = new HttpRequest(this.getBaseContext());
+        httpRequest.loadFriendList(party.id, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                friends = prepareFriendList(response);
+
+//        TODO: Use RecyclerView to animate removing etc.
+            }
+        });
+        httpRequest.loadPeopleList(party.id, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                friends.remove(preparePeopleList(response));
+
+//        TODO: Use RecyclerView to animate removing etc.
+                peopleToAdd = friends.stream().filter(name -> name.toString().toLowerCase().contains(search.toLowerCase())).toArray(User[]::new);
+                displayPeopleList();
+            }
+        });
+
+    }
+
+    private void displayPeopleList() {
+        if(0 < peopleToAdd.length){
+            ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, peopleToAdd);
+            ListView view = findViewById(R.id.list);
+            view.setAdapter(adapter);
+        }
+    }
+
+    private List<User> preparePeopleList(JSONObject jsonObject) {
+        return JsonParser.parsePeopleList(jsonObject);
+    }
+
+    private List<User> prepareFriendList(JSONObject jsonObject) {
+        return JsonParser.parseFriendList(jsonObject);
     }
 
     private void addPersonWhenItemClicked() {

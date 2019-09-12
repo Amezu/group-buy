@@ -12,10 +12,19 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.example.groupbuy.R;
+import com.example.groupbuy.connection.Callback;
+import com.example.groupbuy.connection.HttpRequest;
+import com.example.groupbuy.connection.JsonParser;
+import com.example.groupbuy.friends.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class PeopleFragment extends Fragment {
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.List;
+
+public class PeopleFragment extends Fragment {
+    private List<User> people;
     public PeopleFragment() {
     }
 
@@ -46,15 +55,29 @@ public class PeopleFragment extends Fragment {
     }
 
     private void loadPeopleList() {
-        String[] people = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
-        ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, people);
-        ListView view = getView().findViewById(R.id.list);
-        view.setAdapter(adapter);
+        Party party = (Party) getArguments().getSerializable("party");
+        new HttpRequest(getActivity()).loadPeopleList(party.id, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                loadPeopleList(response);
+                ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, people);
+                ListView view = getView().findViewById(R.id.list);
+                view.setAdapter(adapter);
+
+//        TODO: Use RecyclerView to animate removing etc.
+
+            }
+        });
+
+    }
+
+    private void loadPeopleList(JSONObject jsonObject) {
+        people = JsonParser.parsePeopleList(jsonObject);
     }
 
     private void openAddPersonActivity() {
         Intent intent = new Intent(getActivity(), AddPersonActivity.class);
-        intent.putExtra("partyName", getArguments().getSerializable("party"));
+        intent.putExtra("party", getArguments().getSerializable("party"));
         startActivity(intent);
     }
 }

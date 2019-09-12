@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.groupbuy.connection.HttpRequestDebug;
+import com.example.groupbuy.connection.HttpRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = RegisterActivity.class.getName();
-    private HttpRequestDebug httpRequest = new HttpRequestDebug(this);
+    private HttpRequest httpRequest = new HttpRequest(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,6 +3,7 @@ package com.example.groupbuy.party;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.example.groupbuy.R;
 import com.example.groupbuy.connection.Callback;
 import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.JsonParser;
+import com.example.groupbuy.friends.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -31,6 +33,7 @@ import java.util.List;
 public class PartyFragment extends Fragment {
 
     private List<Product> products;
+    private List<User> people;
     public PartyFragment() {
     }
 
@@ -84,23 +87,37 @@ public class PartyFragment extends Fragment {
     }
 
     private void loadPeoplePart() {
-        String[] people = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
+        Party party = (Party) getArguments().getSerializable("party");
+        new HttpRequest(getActivity()).loadPeopleList(party.id, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                loadPeopleList(response);
+                formatPeoplePart();
+
+//        TODO: Use RecyclerView to animate removing etc.
+
+                FloatingActionButton fab = getView().findViewById(R.id.fab);
+                fab.setOnClickListener(view -> openAddProductActivity());
+            }
+        });
+    }
+    private void formatPeoplePart(){
         String peopleShort;
-        switch (people.length) {
+        switch (people.size()) {
             case 0:
                 peopleShort = "No people invited to party";
                 break;
             case 1:
-                peopleShort = people[0];
+                peopleShort = people.get(0).toString();
                 break;
             case 2:
-                peopleShort = people[0] + ", " + people[1];
+                peopleShort = people.get(0).toString() + ", " + people.get(1).toString();
                 break;
             case 3:
-                peopleShort = people[0] + ", " + people[1] + ", " + people[2];
+                peopleShort = people.get(0).toString() + ", " + people.get(1).toString() + ", " + people.get(2).toString();
                 break;
             default:
-                peopleShort = String.format("%s, %s, %s and %d more people", people[0], people[1], people[2], people.length - 3);
+                peopleShort = String.format("%s, %s, %s and %d more people", people.get(0).toString(), people.get(1).toString(), people.get(2).toString(), people.size() - 3);
                 break;
         }
 
@@ -114,15 +131,19 @@ public class PartyFragment extends Fragment {
         peopleFrame.setOnClickListener(v -> openInvitedPeopleFragment());
     }
 
+    private void loadPeopleList(JSONObject jsonObject) {
+        people = JsonParser.parsePeopleList(jsonObject);
+    }
+
     private void openAddProductActivity() {
         Intent intent = new Intent(getActivity(), AddProductActivity.class);
-        intent.putExtra("partyName", getArguments().getSerializable("party"));
+        intent.putExtra("party", getArguments().getSerializable("party"));
         startActivity(intent);
     }
 
     private void openInvitePersonActivity() {
         Intent intent = new Intent(getActivity(), AddPersonActivity.class);
-        intent.putExtra("partyName", getArguments().getSerializable("party"));
+        intent.putExtra("party", getArguments().getSerializable("party"));
         startActivity(intent);
     }
 
