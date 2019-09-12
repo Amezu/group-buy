@@ -31,8 +31,12 @@ public class AddProductActivity extends AppCompatActivity {
 
     public void addProduct(View view) {
         TextView nameView = findViewById(R.id.nameEdit);
+        TextView priceView = findViewById(R.id.priceEdit);
+
         String name = nameView.getText().toString();
-        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+        Double price = Double.valueOf(priceView.getText().toString());
+
+        Toast.makeText(this, name + " " + price, Toast.LENGTH_SHORT).show();
 
 //        TODO: send adding request
 
