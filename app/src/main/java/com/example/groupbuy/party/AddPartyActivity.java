@@ -33,7 +33,7 @@ public class AddPartyActivity extends AppCompatActivity {
         new HttpRequestDebug(this).addParty(createHashMap(name));
     }
 
-    private Map createHashMap(String groupName){
+    private Map createHashMap(String groupName) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("groupName", groupName);
         return data;

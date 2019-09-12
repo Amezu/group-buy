@@ -1,31 +1,39 @@
 package com.example.groupbuy.party;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.groupbuy.R;
 
-public class ProductListAdapter extends ArrayAdapter<String> {
-    private final Activity context;
-    private final String[] productName;
-    private final String[] subtitle;
-    private final Boolean[] bought;
-    private final Boolean[] clickable;
+import java.util.Comparator;
+import java.util.List;
 
-    public ProductListAdapter(Activity context, String[] productName, String[] subtitle, Boolean[] bought, Boolean[] clickable) {
-        super(context, R.layout.product_row, productName);
-        // TODO Auto-generated constructor stub  
+public class ProductListAdapter extends ArrayAdapter<Product> {
+    private final Activity context;
+    private final List<Product> products;
+    private Comparator<Product> comparator;
+
+    public ProductListAdapter(Activity context, List<Product> products) {
+        super(context, R.layout.product_row, products);
 
         this.context = context;
-        this.productName = productName;
-        this.subtitle = subtitle;
-        this.bought = bought;
-        this.clickable = clickable;
+        this.products = products;
+
+        comparator = (p1, p2) -> Boolean.compare(p2.isMine(), p1.isMine());
+        comparator = comparator.thenComparing((p1, p2) -> Boolean.compare(p1.isBought(), p2.isBought()));
+        comparator = comparator.thenComparing((p1, p2) -> Integer.compare(p2.getThumbsUpCount(), p1.getThumbsUpCount()));
+
+        products.sort(comparator);
     }
 
     public View getView(int position, View view, ViewGroup parent) {
@@ -34,13 +42,49 @@ public class ProductListAdapter extends ArrayAdapter<String> {
 
         TextView titleText = rowView.findViewById(R.id.title);
         TextView subtitleText = rowView.findViewById(R.id.subtitle);
-        CheckBox checkBox = rowView.findViewById(R.id.checkbox);
+        CheckBox checkbox = rowView.findViewById(R.id.checkbox);
+        TextView thumbsUpCount = rowView.findViewById(R.id.thumbsUpCount);
+        ImageView thumbUpImage = rowView.findViewById(R.id.thumbUp);
 
-        titleText.setText(productName[position]);
-        subtitleText.setText(subtitle[position]);
-        checkBox.setChecked(bought[position]);
-        checkBox.setEnabled(clickable[position]);
+        Product product = products.get(position);
+        String title = String.format("%s (%.2f\u200E$)", product.getName(), product.getPrice());
+
+        titleText.setText(title);
+        subtitleText.setText(product.getUser());
+        checkbox.setChecked(product.isBought());
+        checkbox.setEnabled(product.isMine());
+        changeThumbUpColor(thumbUpImage, product);
+        thumbsUpCount.setText(String.valueOf(product.getThumbsUpCount()));
+
+        thumbUpImage.setOnClickListener(v -> {
+            if (!isThumbUpDisabled(product))
+                product.changeLiked();
+
+            notifyDataSetChanged();
+        });
+
+        checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> product.changeBought());
 
         return rowView;
+    }
+
+    private void changeThumbUpColor(ImageView view, Product product) {
+        final int disabledColor = Color.LTGRAY;
+        final int notLikedColor = Color.GRAY;
+        final int likedColor = context.getColor(R.color.colorAccent);
+        Drawable drawable = view.getDrawable().mutate();
+        int color = isThumbUpDisabled(product) ? disabledColor : product.isLiked() ? likedColor : notLikedColor;
+
+        DrawableCompat.setTint(DrawableCompat.wrap(drawable), color);
+    }
+
+    private boolean isThumbUpDisabled(Product product) {
+        return product.isBought() || product.isMine();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        products.sort(comparator);
+        super.notifyDataSetChanged();
     }
 }

@@ -66,10 +66,12 @@ public class AddPersonActivity extends AppCompatActivity {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         });
     }
 
@@ -79,7 +81,7 @@ public class AddPersonActivity extends AppCompatActivity {
         finish();
     }
 
-    private Map createHashMap(String login){
+    private Map createHashMap(String login) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("login", login);
         return data;

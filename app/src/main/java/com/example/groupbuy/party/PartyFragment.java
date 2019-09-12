@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,25 +17,10 @@ import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PartyFragment extends Fragment {
-
-    class Product {
-        String name;
-        boolean bought = false;
-
-        Product(String name) {
-            this.name = name;
-        }
-
-        void changeStatus() {
-            bought = !bought;
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-    }
 
     public PartyFragment() {
     }
@@ -66,32 +50,21 @@ public class PartyFragment extends Fragment {
     }
 
     private void loadProductsPart() {
-        String[] title = {"soki - 2l", "wódka - 3l", "chipsy - 2 paczki"};
-        String[] subtitle = {"(0 propozycji)", "(1 propozycja)", "Ola, cheetosy"};
-        Boolean[] bought = {false, false, true};
-        Boolean[] clickable = {true, true, false};
+        List<Product> products = new ArrayList<>();
+        products.add(new Product("nachos", "Mina", 13.11, true, 1, true));
+        products.add(new Product("coca-cola 2l", "Mark", 2.21, false, 3, true));
+        products.add(new Product("whisky 3l", "Louis", 5.79, false, 3, false));
+        products.add(new Product("whisky 3l", "Olivia", 2.8, false, 4, true));
 
-        ListAdapter productListAdapter = new ProductListAdapter(getActivity(), title, subtitle, bought, clickable);
+        ListAdapter productListAdapter = new ProductListAdapter(getActivity(), products);
 
         ListView productListView = getView().findViewById(R.id.list);
         productListView.setAdapter(productListAdapter);
 
-        productListView.setOnItemClickListener(
-                (parent, view, position, id) -> {
-                    Product product = (Product) parent.getItemAtPosition(position);
-                    product.changeStatus();
-                    if (product.bought)
-                        Toast.makeText(getActivity(), "you marked " + product + " as bought", Toast.LENGTH_SHORT).show();
-                }
-        );
+//        TODO: Use RecyclerView to animate removing etc.
 
         FloatingActionButton fab = getView().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddProductActivity();
-            }
-        });
+        fab.setOnClickListener(view -> openAddProductActivity());
     }
 
     private void loadPeoplePart() {
