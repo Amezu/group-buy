@@ -54,8 +54,8 @@ public class GroupFragment extends Fragment {
     }
 
     private void openAddPersonActivity() {
-//        Intent intent = new Intent(getActivity(), AddPersonActivity.class);
-//        intent.putExtra("groupName", getArguments().getString("groupName", ""));
-//        startActivity(intent);
+        Intent intent = new Intent(getActivity(), AddPersonActivity.class);
+        intent.putExtra("groupName", getArguments().getString("groupName", ""));
+        startActivity(intent);
     }
 }
