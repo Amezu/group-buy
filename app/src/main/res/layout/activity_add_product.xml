@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".party.AddProductActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,32 +17,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:ems="10"
+            android:hint="@string/product_name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/priceEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:ems="10"
+            android:hint="@string/product_price"
+            android:inputType="numberDecimal" />
+
         <Button
-            android:id="@+id/addProductButton"
+            android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_marginTop="10dp"
             android:onClick="addProduct"
-            android:text="@string/add_product_add"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/productNameEdit" />
+            android:text="@string/product_add" />
 
-        <EditText
-            android:id="@+id/productNameEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:ems="10"
-            android:hint="@string/add_product_name"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/addProductButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     public void addProduct(View view) {
-        TextView nameView = findViewById(R.id.productNameEdit);
+        TextView nameView = findViewById(R.id.nameEdit);
         String name = nameView.getText().toString();
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
 
