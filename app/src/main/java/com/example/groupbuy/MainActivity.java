@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.friends.FriendListFragment;
+import com.example.groupbuy.groups.Group;
+import com.example.groupbuy.groups.GroupFragment;
+import com.example.groupbuy.groups.GroupListFragment;
 import com.example.groupbuy.party.Party;
 import com.example.groupbuy.party.PartyFragment;
 import com.example.groupbuy.party.PartyListFragment;
@@ -22,10 +25,10 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final SparseArray<Fragment> FRAGMENT_BY_ID = new SparseArray<>();
-
     static {
         FRAGMENT_BY_ID.put(R.id.navigation_parties, new PartyListFragment());
         FRAGMENT_BY_ID.put(R.id.navigation_friends, new FriendListFragment());
+        FRAGMENT_BY_ID.put(R.id.navigation_groups, new GroupListFragment());
 //        FRAGMENT_BY_ID.put(R.id.navigation_profile, new ProfileFragment());
     }
 
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void openPartyFragment(Party party) {
         loadFragment(PartyFragment.newInstance(party));
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(party.partyName);
         actionBar.show();
@@ -101,6 +105,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(party.partyName);
+        actionBar.show();
+    }
+
+    public void openGroupFragment(Group group) {
+        loadFragment(GroupFragment.newInstance(group));
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(group.toString());
         actionBar.show();
     }
 }

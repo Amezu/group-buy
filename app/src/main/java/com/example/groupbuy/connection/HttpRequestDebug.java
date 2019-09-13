@@ -99,9 +99,9 @@ public class HttpRequestDebug {
             JSONObject object = new JSONObject();
             JSONArray array = new JSONArray();
             JSONObject group1 = new JSONObject();
-            group1.put("groupName", "First group");
+            group1.put("groupName", "First party");
             JSONObject group2 = new JSONObject();
-            group2.put("groupName", "Second group");
+            group2.put("groupName", "Second party");
             array.put(group1);
             array.put(group2);
             object.put("groupList", array);
@@ -160,5 +160,23 @@ public class HttpRequestDebug {
 
     public void addPersonToParty(Map body) {
 
+    }
+
+    public void loadGroupList(Callback callback) {
+        try {
+            JSONObject object = new JSONObject();
+            JSONArray array = new JSONArray();
+            JSONObject group1 = new JSONObject();
+            group1.put("name", "First group");
+            JSONObject group2 = new JSONObject();
+            group2.put("name", "Second group");
+            array.put(group1);
+            array.put(group2);
+            object.put("list", array);
+
+            callback.success(object);
+        } catch (JSONException e) {
+            callback.error();
+        }
     }
 }

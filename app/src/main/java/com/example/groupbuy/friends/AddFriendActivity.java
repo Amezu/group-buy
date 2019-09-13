@@ -13,10 +13,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.groupbuy.R;
+import com.example.groupbuy.connection.Callback;
+import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.HttpRequestDebug;
+import com.example.groupbuy.connection.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddFriendActivity extends AppCompatActivity {
@@ -36,8 +43,17 @@ public class AddFriendActivity extends AppCompatActivity {
     }
 
     private void loadPeopleList(final String search) {
-        String[] allPeople = {"Ashely", "Devin", "Ivan", "Gavin", "Lev", "Damon", "Lillian", "Kyra", "Forrest", "Owen", "Hayden", "Nash", "Dieter", "Holly", "Victor", "Aline", "Dominic", "Jennifer", "Logan"};
-        String[] people = search.isEmpty() ? new String[]{} : Arrays.stream(allPeople).filter(name -> name.toLowerCase().contains(search.toLowerCase())).toArray(String[]::new);
+        new HttpRequest(getApplication()).loadPeopleList(new Callback(){
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                preparePeopleList(response, search);
+            }
+        });
+    }
+
+    private void preparePeopleList(JSONObject response, final String search){
+        List<User> allPeople = JsonParser.parseAllPeopleList(response);
+        User[] people = search.isEmpty() ? new User[]{} : allPeople.stream().filter(name -> name.toString().toLowerCase().contains(search.toLowerCase())).toArray(User[]::new);
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, people);
         ListView view = findViewById(R.id.list);
         view.setAdapter(adapter);
@@ -71,13 +87,22 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private void addPerson(String name) {
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
-        new HttpRequestDebug(this).addPersonToParty(createHashMap(name));
-        finish();
+
+        new HttpRequest(this).getUserId(name, new Callback() {
+            @Override
+            public void success(JSONObject response) throws JSONException {
+                sendRequestToAdd(response.getString("id"));
+            }
+        });
+
     }
 
-    private Map createHashMap(String login) {
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("login", login);
-        return data;
+    private void sendRequestToAdd(String id){
+        new HttpRequest(this).addFriend(id, new Callback() {
+            @Override
+            public void success(JSONObject response2) throws JSONException {
+                finish();
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package com.example.groupbuy.party;
+package com.example.groupbuy.groups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,26 +30,32 @@ import java.util.List;
 import java.util.Map;
 
 public class AddPersonActivity extends AppCompatActivity {
-    private Party party;
+
+    private Group group;
     private User[] peopleToAdd;
     private List<User> friends = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_person);
-        Intent intent = getIntent();
-        party = (Party) intent.getSerializableExtra("party");
+
         loadPeopleList("");
         addPersonWhenItemClicked();
         searchPersonByName();
+
+        Intent intent = getIntent();
+        group = (Group) intent.getSerializableExtra("group");
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(party.toString());
-        actionBar.setSubtitle("Invite guest");
+        actionBar.setTitle(group.toString());
+        actionBar.setSubtitle("Add person to group");
         actionBar.show();
     }
 
     private void loadPeopleList(final String search) {
         HttpRequest httpRequest = new HttpRequest(this.getBaseContext());
+        Intent intent = getIntent();
+        group = (Group) intent.getSerializableExtra("group");
         httpRequest.loadFriendList(new Callback() {
             @Override
             public void success(JSONObject response) throws JSONException {
@@ -58,7 +64,7 @@ public class AddPersonActivity extends AppCompatActivity {
 //        TODO: Use RecyclerView to animate removing etc.
             }
         });
-        httpRequest.loadPeopleList(party.id, new Callback() {
+        httpRequest.loadPeopleGroup(group.getGroupId(), new Callback() {
             @Override
             public void success(JSONObject response) throws JSONException {
                 friends.removeAll(preparePeopleList(response));
@@ -88,8 +94,8 @@ public class AddPersonActivity extends AppCompatActivity {
     private void addPersonWhenItemClicked() {
         ListView peopleListView = findViewById(R.id.list);
         peopleListView.setOnItemClickListener((parent, view, position, id) -> {
-            User person = (User) parent.getItemAtPosition(position);
-            addPerson(person);
+            User user = (User)parent.getItemAtPosition(position);
+            addPerson(user);
         });
     }
 
@@ -111,15 +117,16 @@ public class AddPersonActivity extends AppCompatActivity {
         });
     }
 
-    private void addPerson(User person) {
-        Toast.makeText(this, person.toString(), Toast.LENGTH_SHORT).show();
-        new HttpRequest(this).addPersonToParty(person.getUserId(), party.id, new Callback(){
+    private void addPerson(User user) {
+        Intent intent = getIntent();
+        group = (Group) intent.getSerializableExtra("group");
+        Toast.makeText(this, user.toString(), Toast.LENGTH_SHORT).show();
+        new HttpRequest(this).addPersonToGroup(group.getGroupId(), user.getUserId(), new Callback(){
             @Override
             public void success(JSONObject response) throws JSONException {
                 finish();
             }
         });
     }
-
 
 }

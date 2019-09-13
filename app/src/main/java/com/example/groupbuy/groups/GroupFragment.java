@@ -1,4 +1,4 @@
-package com.example.groupbuy.party;
+package com.example.groupbuy.groups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.example.groupbuy.connection.Callback;
 import com.example.groupbuy.connection.HttpRequest;
 import com.example.groupbuy.connection.JsonParser;
 import com.example.groupbuy.friends.User;
+import com.example.groupbuy.party.Party;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -23,19 +24,19 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class PeopleFragment extends Fragment {
+public class GroupFragment extends Fragment {
     private List<User> people;
-    public PeopleFragment() {
+    public GroupFragment() {
     }
 
-    public static PeopleFragment newInstance(Party party) {
-        PeopleFragment peopleFragment = new PeopleFragment();
+    public static GroupFragment newInstance(Group group) {
+        GroupFragment GroupFragment = new GroupFragment();
 
         Bundle args = new Bundle();
-        args.putSerializable("party", party);
-        peopleFragment.setArguments(args);
+        args.putSerializable("group", group);
+        GroupFragment.setArguments(args);
 
-        return peopleFragment;
+        return GroupFragment;
     }
 
     @Override
@@ -55,17 +56,14 @@ public class PeopleFragment extends Fragment {
     }
 
     private void loadPeopleList() {
-        Party party = (Party) getArguments().getSerializable("party");
-        new HttpRequest(getActivity()).loadPeopleList(party.id, new Callback() {
+        Group group = (Group) getArguments().getSerializable("group");
+        new HttpRequest(getActivity()).loadPeopleGroup(group.getGroupId(), new Callback() {
             @Override
             public void success(JSONObject response) throws JSONException {
                 loadPeopleList(response);
                 ListAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_activated_1, people);
                 ListView view = getView().findViewById(R.id.list);
                 view.setAdapter(adapter);
-
-//        TODO: Use RecyclerView to animate removing etc.
-
             }
         });
 
@@ -75,9 +73,10 @@ public class PeopleFragment extends Fragment {
         people = JsonParser.parsePeopleList(jsonObject);
     }
 
+
     private void openAddPersonActivity() {
         Intent intent = new Intent(getActivity(), AddPersonActivity.class);
-        intent.putExtra("party", getArguments().getSerializable("party"));
+        intent.putExtra("group", getArguments().getSerializable("group"));
         startActivity(intent);
     }
     @Override

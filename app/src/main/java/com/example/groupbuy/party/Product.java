@@ -2,7 +2,9 @@ package com.example.groupbuy.party;
 
 import com.example.groupbuy.connection.HttpRequest;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String id;
     private String name;
     private String user;

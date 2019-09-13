@@ -1,5 +1,4 @@
-package com.example.groupbuy.party;
-
+package com.example.groupbuy.groups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,9 +20,7 @@ import com.example.groupbuy.MainActivity;
 import com.example.groupbuy.R;
 import com.example.groupbuy.connection.Callback;
 import com.example.groupbuy.connection.HttpRequest;
-import com.example.groupbuy.connection.HttpRequestDebug;
 import com.example.groupbuy.connection.JsonParser;
-import com.example.groupbuy.connection.Session;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -31,11 +28,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import static android.widget.Toast.LENGTH_SHORT;
-import static android.widget.Toast.makeText;
+public class GroupListFragment extends Fragment {
 
-public class PartyListFragment extends Fragment {
-    private List<Party> partyList;
+    private List<Group> groups;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,14 +41,14 @@ public class PartyListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadParties();
+        createGroupList();
     }
 
-    private void loadParties(){
-        new HttpRequest(getActivity()).loadPartyList(new Callback() {
+    private void createGroupList() {
+        new HttpRequest(getActivity()).loadGroupList(new Callback() {
             @Override
             public void success(JSONObject response) throws JSONException {
-                loadPartyList(response);
+                loadGroupList(response);
 
                 FloatingActionButton fab = getView().findViewById(R.id.fab);
                 fab.setOnClickListener(view -> openAddGroupActivity());
@@ -66,11 +61,10 @@ public class PartyListFragment extends Fragment {
         if (v.getId() == R.id.list) {
             ListView lv = (ListView) v;
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            Party party = (Party) lv.getItemAtPosition(acmi.position);
+            Group group = (Group) lv.getItemAtPosition(acmi.position);
 
-            menu.setHeaderTitle(party.partyName);
-            Session session = Session.getInstance(getContext());
-            if(party.ownerId.equals(session.getUserID())) {
+            menu.setHeaderTitle(group.toString());
+            if(group.getOwner().equals("true")) {
                 menu.add("Rename");
                 menu.add("Delete");
             }
@@ -83,81 +77,61 @@ public class PartyListFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
         TextView view = (TextView) info.targetView;
-        int id = info.position;
+        HttpRequest httpRequest = new HttpRequest(getActivity());
         Toast.makeText(getActivity(), item.getTitle() + " " + view.getText(), Toast.LENGTH_SHORT).show();
         if (item.getTitle() == "Rename") {
-//            Intent intent = new Intent(getActivity(), RenamePartyActivity.class);
-//            intent.putExtra("partyId", partyList.get(id).id);
-//            intent.putExtra("partyName", partyList.get(id).partyName);
-//            startActivity(intent);
-//            loadParties();
+
         } else if (item.getTitle() == "Delete") {
-            new HttpRequest(getActivity()).deleteParty(partyList.get(id).id, new Callback() {
+            httpRequest.deleteGroup(groups.get(info.position).getGroupId(), new Callback(){
                 @Override
                 public void success(JSONObject response) throws JSONException {
-                    if (response.get("status").equals(true)) {
-                        loadParties();
-                    }
-                }
-
-                @Override
-                public void error() {
-                    makeText(getActivity(), "Operation failed", LENGTH_SHORT).show();
+                    createGroupList();
                 }
             });
-
         } else if (item.getTitle() == "Leave") {
-            new HttpRequest(getActivity()).leaveParty(partyList.get(id).id, new Callback() {
-                @Override
-                public void success(JSONObject response) throws JSONException {
-                    if (response.get("status").equals(true)) {
-                        loadParties();
-                    }
-                }
-
-                @Override
-                public void error() {
-                    makeText(getActivity(), "Operation failed", LENGTH_SHORT).show();
-                }
-            });
+            //httpRequest.removeUserFromGroup();
         } else return false;
 
         return true;
     }
 
-
-
-    private void loadPartyList(JSONObject jsonObject) {
-        partyList = JsonParser.parsePartyList(jsonObject);
-        ListAdapter partiesAdapter = new ArrayAdapter<>(
+    private void loadGroupList(JSONObject jsonObject) {
+        groups = JsonParser.parseGroupList(jsonObject);
+        ListAdapter groupsAdapter = new ArrayAdapter<>(
                 getActivity(),
-                android.R.layout.simple_list_item_1, partyList);
-        ListView partiesView = getView().findViewById(R.id.list);
+                android.R.layout.simple_list_item_1, groups
+                );
+        ListView groupsView = getView().findViewById(R.id.list);
 
-        partiesView.setAdapter(partiesAdapter);
-        registerForContextMenu(partiesView);
-        partiesView.setOnItemClickListener((parent, view, position, id) -> {
-            Party party = partyList.get(position);
-            openPartyFragment(party);
-        });
+        groupsView.setAdapter(groupsAdapter);
+        registerForContextMenu(groupsView);
+        groupsView.setOnItemClickListener(
+                (parent, view, position, id) -> {
+                    Group group = (Group) parent.getItemAtPosition(position);
+                    openGroupFragment(group);
+                }
+        );
     }
 
     private void openAddGroupActivity() {
-        Intent intent = new Intent(getActivity(), AddPartyActivity.class);
+        Intent intent = new Intent(getActivity(), AddGroupActivity.class);
         startActivity(intent);
     }
 
-    private void openPartyFragment(Party party) {
+    private void openGroupFragment(Group group) {
         MainActivity activity = (MainActivity) getActivity();
-        activity.openPartyFragment(party);
+        activity.openGroupFragment(group);
     }
 
     @Override
     public String toString() {
-        return "Parties";
+        return "Groups";
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        createGroupList();
+    }
 }

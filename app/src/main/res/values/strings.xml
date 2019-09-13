@@ -6,8 +6,8 @@
     <string name="add_party_name">Party name</string>
     <string name="add_party_create">Create</string>
 
-    <string name="add_product_name">Product name</string>
-    <string name="add_product_add">Add</string>
+    <string name="product_name">Name</string>
+    <string name="product_add">Add</string>
 
     <string name="title_parties">Parties</string>
     <string name="title_groups">Groups</string>
@@ -24,4 +24,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="friends">Friends</string>
     <string name="add_person_name">Start typing name…</string>
+    <string name="product_price">Price</string>
+    <string name="product_edit">Change</string>
+    <string name="add_group_create">Create</string>
+    <string name="add_group_name">Name</string>
 </resources>

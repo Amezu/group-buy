@@ -149,27 +149,14 @@ public class HttpRequest {
 
     public void loadGroupList(Callback callback) {
         Session session = Session.getInstance(context);
-        sendRequest(new HashMap(), session.getID(), "users/groups", Request.Method.GET, callback);
+        sendRequest(new HashMap(), session.getID(), "permanentGroups/", Request.Method.GET, callback);
     }
 
 
 
-    public void addGroup(Map body) {
+    public void addGroup(Map body, Callback callback) {
         Session session = Session.getInstance(context);
-        sendRequest(body, session.getID(), "groups/", Request.Method.POST, new Callback() {
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                if (response.get("status").equals(true)) {
-                    final Intent intent = new Intent(context, MainActivity.class);
-                    context.startActivity(intent);
-                }
-            }
-
-            @Override
-            public void error() {
-                makeText(context, "Operation failed", LENGTH_SHORT).show();
-            }
-        });
+        sendRequest(body, session.getID(), "permanentGroups/", Request.Method.POST, callback);
     }
 
     public void renameGroup(String group_id) {
@@ -189,37 +176,10 @@ public class HttpRequest {
         });
     }
 
-    public void deleteGroup(String group_id) {
+
+    public void deleteParty(String group_id, Callback callback) {
         Session session = Session.getInstance(context);
-        sendRequest(new HashMap(), session.getID(), "users/groups/delete/" + group_id, Request.Method.DELETE, new Callback() {
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                if (response.get("status").equals(true)) {
-
-                }
-            }
-
-            @Override
-            public void error() {
-                makeText(context, "Operation failed", LENGTH_SHORT).show();
-            }
-        });
-    }
-    public void deleteParty(String group_id) {
-        Session session = Session.getInstance(context);
-        sendRequest(new HashMap(), session.getID(), "groups/" + group_id, Request.Method.DELETE, new Callback() {
-            @Override
-            public void success(JSONObject response) throws JSONException {
-                if (response.get("status").equals(true)) {
-
-                }
-            }
-
-            @Override
-            public void error() {
-                makeText(context, "Operation failed", LENGTH_SHORT).show();
-            }
-        });
+        sendRequest(new HashMap(), session.getID(), "groups/" + group_id, Request.Method.DELETE, callback);
     }
     public void loadPartyList(Callback callback) {
         Session session = Session.getInstance(context);
@@ -297,8 +257,64 @@ public class HttpRequest {
         sendRequest(new HashMap(), session.getID(), "groups/" + groupId + "/user", Request.Method.GET, callback);
     }
 
-    public void loadFriendList(String groupId, Callback callback) {
+    public void loadFriendList(Callback callback) {
         Session session = Session.getInstance(context);
-        sendRequest(new HashMap(), session.getID(), "friends/" + groupId + "/user", Request.Method.GET, callback);
+        sendRequest(new HashMap(), session.getID(), "friends/" + session.getUserID() + "/user", Request.Method.GET, callback);
+    }
+
+    public void getUserId(String username, Callback callback){
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "users/" + username, Request.Method.GET, callback);
+    }
+
+    public void addFriend(String id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "friends/" + id + "/user", Request.Method.POST, callback);
+    }
+
+    public void addPersonToParty(String userId, String id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "groups/" + id + "/user/" + userId, Request.Method.POST, callback);
+    }
+
+    public void leaveParty(String id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "groups/" + id + "/user/" + session.getUserID(), Request.Method.DELETE, callback);
+    }
+
+    public void addProduct(Map body, String id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(body, session.getID(), "groups/" + id + "/product", Request.Method.POST, callback);
+    }
+
+    public void deleteProduct(String groupId, String productId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "groups/" + groupId + "/product/" + productId, Request.Method.DELETE, callback);
+    }
+
+
+    public void editProduct(Map body, String productId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(body, session.getID(), "products/" + productId, Request.Method.PUT, callback);
+    }
+
+    public void loadPeopleGroup(String groupId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "permanentGroups/" + groupId, Request.Method.GET, callback);
+    }
+
+    public void addPersonToGroup(String groupId, String userId, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "permanentGroups/" + groupId + "/user/" + userId, Request.Method.POST, callback);
+    }
+
+    public void deleteGroup(String group_id, Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "permanentGroups/" + group_id, Request.Method.DELETE, callback);
+    }
+
+    public void loadPeopleList(Callback callback) {
+        Session session = Session.getInstance(context);
+        sendRequest(new HashMap(), session.getID(), "users/", Request.Method.GET, callback);
     }
 }

@@ -1,6 +1,9 @@
 package com.example.groupbuy.friends;
 
-public class User {
+import android.util.Log;
+
+
+public class User{
     public String getUserId() {
         return userId;
     }
@@ -30,4 +33,15 @@ public class User {
 
     private String userId;
     private String username;
+
+    @Override
+    public boolean equals(Object o) {
+        Log.i("xD",this + " " + o);
+        if (this.username.equals(o.toString())){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
